@@ -1,0 +1,15 @@
+{
+	"description": "一诺尔广告",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"appid": "wxc5390a62c8d01c15",
+	"projectname": "enead",
+	"miniprogramRoot": "dist/",
+	"condition": {}
+}
