@@ -102,7 +102,7 @@ export default class extends wepy.app {
       // 'pages/winningList', // 我的奖品
       // 'pages/orderList', // 我的预约
       // 'pages/shop', // 店铺管理
-      // 'pages/user', // 个人中心
+      'pages/user', // 个人中心
       // 'pages/adList', // 广告列表
       // 'pages/adDetails', // 广告详情
       // 'pages/upDataMoney',

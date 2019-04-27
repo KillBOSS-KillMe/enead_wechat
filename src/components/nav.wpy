@@ -119,14 +119,8 @@ import check from '../mixins/check'
 export default class Nav extends wepy.component {
   mixins = [check]
   data = {
-    userInfo: {},
-    guangGaoNode: null,
-    name: '',
-    phone: '',
-    id: '',
     navAction: ['action', 'noAction']
   };
-  props = {};
   methods = {
     goIndex() {
       this.$parent.$parent.globalData.navAction = ['action', 'noAction']
@@ -138,7 +132,6 @@ export default class Nav extends wepy.component {
     }
   };
   onLoad() {
-    this.navImg = this.$parent.$parent.globalData.navImg
     this.navAction = this.$parent.$parent.globalData.navAction
     this.$apply()
   };

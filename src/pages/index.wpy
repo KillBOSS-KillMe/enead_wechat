@@ -401,28 +401,28 @@ export default class Index extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null,
-    authorizationButton: '',
-    thisShare: null,
-    code: null,
-    image: '',
+    // userInfo: null,
+    // authorizationButton: '',
+    // thisShare: null,
+    // code: null,
+    // image: '',
     // image: '/img/indexLoading.gif',
-    advertisingName: '',
-    money: '',
-    share: '',
-    phone: '',
-    address: '',
-    shopName: '',
-    luckDrawData: false,
-    autoW: null,
-    autoH: null,
-    uuid: null,
-    time: '',
-    indexloading: '',
-    shopInfoShow: false,
-    titleMoneyImg: false, // 控制红包提示图片显示
-    moneyImg: 'getMoneyBg', // 红包领取提示图片内容
-    getMoney: 0.00 // 获取红包金额
+    // advertisingName: '',
+    // money: '',
+    // share: '',
+    // phone: '',
+    // address: '',
+    // shopName: '',
+    // luckDrawData: false,
+    // autoW: null,
+    // autoH: null,
+    // uuid: null,
+    // time: '',
+    // indexloading: '',
+    // shopInfoShow: false,
+    // titleMoneyImg: false, // 控制红包提示图片显示
+    // moneyImg: 'getMoneyBg', // 红包领取提示图片内容
+    // getMoney: 0.00 // 获取红包金额
   };
 
   methods = {
@@ -431,48 +431,48 @@ export default class Index extends wepy.page {
       // 销毁当前页{跳转}
       this.$redirect(url)
     },
-    // 跳转至转盘页
-    goTurntable () {
-      // 不销毁当前页{跳转} 可返回
-      this.$navigate('/pages/turntable')
-    },
-    // 点击图片放大，长按后可操作
-    shareQRCodeImg(e) {
-      wx.previewImage({
-        current: [this.image], // 当前显示图片的http链接   
-        urls: [this.image] // 需要预览的图片http链接列表   
-      })
-    },
-    // 拨打商家电话
-    dialPhone() {
-      if (this.phone) {
-        wx.makePhoneCall({
-          phoneNumber: this.phone,
-          success: function () {
-            console.log('拨打电话成功！')
-          },
-          fail: function () {
-            console.log('拨打电话失败！')
-          }
-        })
-      }
-    },
-    // 拨打公司电话
-    developerPhone(e) {
-      let phone = e.target.dataset.phone
-      if (phone) {
-        wx.makePhoneCall({
-          phoneNumber: phone,
-          success: function () {
-            console.log('拨打电话成功！')
-          },
-          fail: function () {
-            console.log('拨打电话失败！')
-          }
-        })
-      }
-    },
-    // 公司地址导航
+    // // 跳转至转盘页
+    // goTurntable () {
+    //   // 不销毁当前页{跳转} 可返回
+    //   this.$navigate('/pages/turntable')
+    // },
+    // // 点击图片放大，长按后可操作
+    // shareQRCodeImg(e) {
+    //   wx.previewImage({
+    //     current: [this.image], // 当前显示图片的http链接   
+    //     urls: [this.image] // 需要预览的图片http链接列表   
+    //   })
+    // },
+    // // 拨打商家电话
+    // dialPhone() {
+    //   if (this.phone) {
+    //     wx.makePhoneCall({
+    //       phoneNumber: this.phone,
+    //       success: function () {
+    //         console.log('拨打电话成功！')
+    //       },
+    //       fail: function () {
+    //         console.log('拨打电话失败！')
+    //       }
+    //     })
+    //   }
+    // },
+    // // 拨打公司电话
+    // developerPhone(e) {
+    //   let phone = e.target.dataset.phone
+    //   if (phone) {
+    //     wx.makePhoneCall({
+    //       phoneNumber: phone,
+    //       success: function () {
+    //         console.log('拨打电话成功！')
+    //       },
+    //       fail: function () {
+    //         console.log('拨打电话失败！')
+    //       }
+    //     })
+    //   }
+    // },
+    // // 公司地址导航
     developerAddress(e) {
       wx.openLocation({
         latitude: 34.2060500000,
@@ -607,65 +607,65 @@ export default class Index extends wepy.page {
     }, 1000)
   }
   async onLoad(options) {
-    this.image = this.$parent.globalData.imgUrlMain
-    this.$apply()
-    // 获取用户信息
-    this.userInfo = await wepy.getUserInfo()
-    this.userInfo = this.userInfo.rawData
-    // 判断用户信息是否为空
-    if (this.userInfo) {
-      // 分享人
-      this.share = options.share
-      // 分享广告的UUID
-      this.uuid = options.uuid
-      this.onGotUserInfo()
-    }
+    // this.image = this.$parent.globalData.imgUrlMain
+    // this.$apply()
+    // // 获取用户信息
+    // this.userInfo = await wepy.getUserInfo()
+    // this.userInfo = this.userInfo.rawData
+    // // 判断用户信息是否为空
+    // if (this.userInfo) {
+    //   // 分享人
+    //   this.share = options.share
+    //   // 分享广告的UUID
+    //   this.uuid = options.uuid
+    //   this.onGotUserInfo()
+    // }
   };
-  // 隐藏红包提示图片
-  hideGetMoneyImg() {
-    this.titleMoneyImg = false
-    this.$apply()
-  }
-  onLaunch() {
-    wepy.login().then(res => {
-      console.log('login: ', res)
-    })
-  };
-  // 分享页面
-  onShareAppMessage() {
-    // let pages = getCurrentPages() // 获取加载的页面
-    // let currentPage = pages[pages.length - 1] // 获取当前页面的对象
-    // let url = currentPage.route // 当前页面url
-    let url = `pages/index?share=${this.thisShare}&uuid=${this.uuid}`
-    this.hideGetMoneyImg()
-    return {
-      title: this.title,
-      desc: '',
-      imageUrl: this.image,
-      path: url
-    }
-  };
-  // 控制背景图大小
-  autoImage(e) {
-    // 获取图片的狂傲
-    var imgW = e.detail.width
-    var imgH = e.detail.height
-    // 计算图片比例
-    var imgScale = imgW / imgH
-    // 声明自适应宽高变量
-    var autoW = ''
-    var autoH = ''
-    // 获取屏幕宽度，并将图片设置为屏幕等宽
-    wx.getSystemInfo({
-      success: res => {
-        autoW = res.windowWidth
-        autoH = autoW / imgScale
-        this.autoW = autoW
-        this.autoH = autoH
-        this.$apply()
-      }
-    })
-  }
+  // // 隐藏红包提示图片
+  // hideGetMoneyImg() {
+  //   this.titleMoneyImg = false
+  //   this.$apply()
+  // }
+  // onLaunch() {
+  //   wepy.login().then(res => {
+  //     console.log('login: ', res)
+  //   })
+  // };
+  // // 分享页面
+  // onShareAppMessage() {
+  //   // let pages = getCurrentPages() // 获取加载的页面
+  //   // let currentPage = pages[pages.length - 1] // 获取当前页面的对象
+  //   // let url = currentPage.route // 当前页面url
+  //   let url = `pages/index?share=${this.thisShare}&uuid=${this.uuid}`
+  //   this.hideGetMoneyImg()
+  //   return {
+  //     title: this.title,
+  //     desc: '',
+  //     imageUrl: this.image,
+  //     path: url
+  //   }
+  // };
+  // // 控制背景图大小
+  // autoImage(e) {
+  //   // 获取图片的狂傲
+  //   var imgW = e.detail.width
+  //   var imgH = e.detail.height
+  //   // 计算图片比例
+  //   var imgScale = imgW / imgH
+  //   // 声明自适应宽高变量
+  //   var autoW = ''
+  //   var autoH = ''
+  //   // 获取屏幕宽度，并将图片设置为屏幕等宽
+  //   wx.getSystemInfo({
+  //     success: res => {
+  //       autoW = res.windowWidth
+  //       autoH = autoW / imgScale
+  //       this.autoW = autoW
+  //       this.autoH = autoH
+  //       this.$apply()
+  //     }
+  //   })
+  // }
   async setUserInfo(userInfo) {
     // 从组件中获取userInfo
     await wepy.login().then(res => {
@@ -687,39 +687,39 @@ export default class Index extends wepy.page {
       success: function (data) {}
     })
   }
-  // 获取活动状态
-  getlotteryInfo() {
-    wepy.login().then(res => {
-      this.code = res.code
-      // 查看广告页抽奖状态，控制跳转按钮是否显示
-      wx.request({
-        url: `${this.$parent.globalData.requestUrl}/lottery/show`,
-        method: 'POST',
-        data: {
-          code: this.code,
-          uuid: this.uuid
-        },
-        success: data => {
-          // 400为无效活动，活动未新建，不显示转盘跳转按钮
-          if (data.data.status_code === 200) {
-            this.luckDrawData = true
-            this.$apply()
-            this.$parent.globalData.awards = data.data.data
-          } else {
-            this.$parent.globalData.lotteryMessage = data.data.message
-          }
-        }
-      })
-    })
-  }
-  // 进入使用说明页
-  goDescription() {
-    this.$navigate('/pages/description')
-  };
-  // 钱包入账明细
-  walletIn() {
-    this.hideGetMoneyImg()
-    this.$navigate('/pages/userWalletIn')
-  };
+  // // 获取活动状态
+  // getlotteryInfo() {
+  //   wepy.login().then(res => {
+  //     this.code = res.code
+  //     // 查看广告页抽奖状态，控制跳转按钮是否显示
+  //     wx.request({
+  //       url: `${this.$parent.globalData.requestUrl}/lottery/show`,
+  //       method: 'POST',
+  //       data: {
+  //         code: this.code,
+  //         uuid: this.uuid
+  //       },
+  //       success: data => {
+  //         // 400为无效活动，活动未新建，不显示转盘跳转按钮
+  //         if (data.data.status_code === 200) {
+  //           this.luckDrawData = true
+  //           this.$apply()
+  //           this.$parent.globalData.awards = data.data.data
+  //         } else {
+  //           this.$parent.globalData.lotteryMessage = data.data.message
+  //         }
+  //       }
+  //     })
+  //   })
+  // }
+  // // 进入使用说明页
+  // goDescription() {
+  //   this.$navigate('/pages/description')
+  // };
+  // // 钱包入账明细
+  // walletIn() {
+  //   this.hideGetMoneyImg()
+  //   this.$navigate('/pages/userWalletIn')
+  // };
 }
 </script>
