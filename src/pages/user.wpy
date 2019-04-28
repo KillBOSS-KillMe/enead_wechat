@@ -1,0 +1,46 @@
+<style lang="less">
+
+</style>
+<template>
+  <view>
+    用户页用户页用户页用户页
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import nav from '../components/nav' // 底部导航
+  export default class User extends wepy.page {
+    config = {
+      navigationBarTitleText: '个人中心'
+    }
+    components = {
+      nav: nav
+    }
+
+    mixins = []
+
+    data = {
+      userInfo: {},
+      requestImgUrl: ''
+    }
+
+    computed = {
+      
+    }
+
+    methods = {
+      // 底部导航跳转
+      goPage (url, evt) {
+        // 销毁当前页{跳转}
+        this.$redirect(url)
+      },
+    }
+
+    onLoad() {
+      this.userInfo = this.$parent.globalData.userInfo
+      this.requestImgUrl = this.$parent.globalData.requestImgUrl
+    }
+  }
+</script>

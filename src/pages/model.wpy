@@ -1,0 +1,38 @@
+<style lang="less">
+
+</style>
+<template>
+  <view>模板模板模板模板模板模板模板</view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class Model extends wepy.page {
+    config = {
+      navigationBarTitleText: '个人中心'
+    }
+    components = {
+
+    }
+
+    mixins = []
+
+    data = {
+      userInfo: {},
+      requestImgUrl: ''
+    }
+
+    computed = {
+      
+    }
+
+    methods = {
+
+    }
+
+    onLoad() {
+      this.userInfo = this.$parent.globalData.userInfo
+      this.requestImgUrl = this.$parent.globalData.requestImgUrl
+    }
+  }
+</script>

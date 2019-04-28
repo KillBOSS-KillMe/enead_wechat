@@ -1,34 +1,439 @@
 <style lang="less">
-  
+  // 加载动画图片大小及位置
+.indexloadImg{
+  width:100rpx !important;
+  height:100rpx !important;
+  margin:330rpx !important;
+}
+
+.shopInfo{
+  height: auto;
+  color: #999;
+  font-size: 30rpx;
+  padding: 30rpx;
+  margin-bottom:100rpx;
+}
+.shopName{
+  font-weight: 700
+}
+.shopInfo view{
+  height: auto;
+  min-height: 50rpx;
+  line-height: 50rpx;
+}
+
+.developerInfo{
+  height: auto;
+  color: #666;
+  font-size: 20rpx;
+  margin-top:300rpx;
+  margin-bottom:130rpx;
+  text-align: center;
+}
+.developerName{
+  font-weight: 700
+}
+.developerInfo view{
+  height: auto;
+  min-height: 40rpx;
+  line-height: 40rpx;
+}
+.developerPhone{
+  display: inline-block;
+}
+.developerPhone view{
+  width: 150rpx;
+  display: inline-block;
+}
+
+.luckDraw {
+  width:135rpx;
+  height:93rpx;
+  line-height:93rpx;
+  background-color:rgba(0, 0, 0, 0.3);
+  border-radius:100rpx 0 0 100rpx;
+  position:fixed;
+  bottom:356rpx;
+  right:0rpx;
+  text-align:center;
+  font-size:25rpx;
+  color:#fff;
+}
+.button-hover[type=primary] {
+background-color: rgba(0, 0, 0, 0.3);
+}
+button[type=primary] {
+  color:#FFFFFF;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.shareIt{
+  width: 90rpx;
+  height: 90rpx;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  position: fixed;
+  bottom: 250rpx;
+  right: 20rpx;
+  text-align: center;
+  padding: 0;
+  font-size: 0rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.luckDraw_img {
+  width: 150rpx;
+  height: 120rpx;
+}
+
+.service {
+  width: 90rpx;
+  height: 90rpx;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  position: fixed;
+  bottom: 150rpx;
+  right: 20rpx;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  color: #fff;
+}
+
+.appointment {
+  position: absolute;
+  top: 200rpx;
+  left: 12.5%;
+  // background: linear-gradient(to right, #ef3f22, #e98534, #e9bc34);
+  background: linear-gradient(to right, #f86e09, #f29200, #f86e09);
+  color: #fff;
+  border-radius: 40rpx;
+  font-size: 24rpx;
+  width: 75%;
+  height: 700rpx;
+  padding: 0 60rpx;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.title {
+  margin-top: -80rpx;
+  font-weight: bold;
+}
+
+.appointment_form {
+  color: #fff;
+  font-size: 24rpx;
+}
+
+.appointment_input {
+  border: 4rpx #fff dashed;
+  border-radius: 40rpx;
+  height: 80rpx;
+  box-sizing: border-box;
+  padding: 0 40rpx;
+  margin: 30rpx 0;
+  color: #fff;
+}
+
+.appointment_img {
+  position: relative;
+  top: -80rpx;
+  left: 120rpx;
+  width: 230rpx;
+  height: 124rpx;
+}
+
+.appointment_img1 {
+  position: relative;
+  top: -120rpx;
+  left: 200rpx;
+  width: 60rpx;
+  height: 100rpx;
+}
+
+.mod_btn {
+  margin: auto;
+  border-radius: 50%;
+  border: 6rpx solid #fff;
+  background: rgba(0, 0, 0, 0);
+  width: 130rpx;
+  height: 130rpx;
+  color: #fff;
+  font-size: 30rpx;
+  line-height: 120rpx;
+  font-weight: bold;
+}
+.zhuan {
+  position: absolute;
+  top: 250rpx;
+  left: 12.5%;
+  z-index: 22;
+}
+.error {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  top: 220rpx;
+  right: 18.5%;
+  z-index: 22;
+}
+#getUserInfo{
+  position: fixed;
+  top: 0;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0rpx !important;
+  z-index: 999;
+  background-color:rgba(255, 255, 255, 0);
+  color: #fff;
+}
+.activity{
+  width: 100%;
+}
+.getMoney{
+  position: fixed;
+  top: 300rpx;
+  left: 75rpx;
+  width: 600rpx;
+  height: 600rpx;
+}
+
+.getMoney image{
+  position: absolute;
+  width: 600rpx;
+  height: 600rpx;
+}
+.getMoney .infoShow{
+  position: absolute;
+  width: 360rpx;
+  height: 340rpx;
+  z-index: 1;
+  bottom: 0;
+  margin: 0 120rpx;
+}
+.hideGetMoneyImg{
+  position: absolute;
+  width: 50rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  z-index: 1;
+  top: 0;
+  right: 85rpx;
+  color: #fff;
+  text-align: center;
+}
+.infoShow .moneyTitle{
+  width: 100%;
+  font-size: 40rpx;
+  color: #fff;
+  text-align: center;
+}
+.infoShow .moneyShow{
+  width: 100%;
+  height: 170rpx;
+  font-size: 40rpx;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.infoShow .moneyShow view:nth-child(1){
+  text-align: right;
+  font-size: 50rpx;
+  height: 170rpx;
+  line-height: 170rpx;
+}
+.infoShow .moneyShow view:nth-child(2){
+  text-align: left;
+  font-size: 20rpx;
+  height: 170rpx;
+  line-height: 190rpx;
+}
+.infoShow .button{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.infoShow .button view, .infoShow .button button{
+  width: 200rpx;
+  height: 80rpx;
+  border-radius: 30rpx;
+  font-size: 30rpx;
+  color: #fff;
+  background-color: #f29200;
+  margin: 0 5rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>
 <template>
   <view>
-
+    <!-- 活动主图 -->
+    <image src="{{image}}" data-image="{{image}}" @tap="shareQRCodeImg" style="width:{{autoW}}px;height:{{autoH}}px" bindload='autoImage' class="activity {{indexloading}}" />
+    <view class="shopInfo {{shopinfo.shopName != ''?'show':'hidden'}}">
+      <view class="shopName">{{shopinfo.shopName}}</view>
+      <view @tap="dialPhone" data-phone="{{shopinfo.phone}}">电话:{{shopinfo.phone}}</view>
+      <view>地址:{{shopinfo.address}}</view>
+    </view>
+    <view class="developerInfo">
+      <view class="developerName">技术支持</view>
+      <view>©2018 西安贝肯伟网络科技有限公司 版权所有</view>
+      <view class="developerPhone">
+        联系电话：
+        <view @tap="dialPhone" data-phone="029-84498995">029-84498995</view>
+        <!-- <view @tap="developerPhone" data-phone="029-68567800">029-68567800</view> -->
+      </view>
+      <view @tap="developerAddress">陕西省西安市高新区天谷八路软件新城研发基地二期A9栋405</view>
+    </view>
+    <!-- 活动 -->
+    <view>
+      <button class="shareIt" type="primary" open-type="share" data-name="pageShare" id="share">
+        <icon class="iconfont icon-fenxiang"></icon>
+      </button>
+      <view class="luckDraw" @tap="goDescription">
+        使用说明
+      </view>
+      <!-- 联系客服 -->
+      <view class='service iconfont icon-dianhua' @tap="dialPhone" data-phone="{{shopinfo.phone}}"></view>
+    </view>
+    <!-- 红包领取提示 -->
+    <!-- <view class="getMoney"> -->
+    <view class="getMoney" wx:if="{{titleMoneyImg}}">
+      <view class="hideGetMoneyImg"  @tap="hideGetMoneyImg">ⓧ</view>
+      <image src="/img/{{moneyImg}}.png" />
+      <view class="infoShow">
+        <view class="moneyTitle">恭喜获得红包</view>
+        <view class="moneyShow">
+          <view>{{getMoney}}</view>
+          <view>元</view>
+        </view>
+        <view class="button">
+          <view @tap="walletIn">查看</view>
+          <button type="primary" open-type="share" data-name="pageShare" id="share">
+            分享
+          </button>
+        </view>
+      </view>
+    </view>
+    <view>
+      <button open-type="getUserInfo" wx:if='{{getUserInfoButShow}}' id='getUserInfo' lang="zh_CN" @getuserinfo="onGotUserInfo">{{time}}</button>
+    </view>
+    <nav @childFn.user="goPage" />
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
+  import nav from '../components/nav' // 底部导航
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '广告首页'
     }
     components = {
-
+      nav: nav
     }
 
     mixins = []
 
-    data = {}
+    data = {
+      userInfo: {},
+      requestImgUrl: '',
+      image: 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1556471365&di=d09f43e91e233b96bdd6a76297de48a9&src=http://b-ssl.duitang.com/uploads/item/201806/03/20180603232440_qwqcn.jpeg',
+      autoW: 0,
+      autoH: 0,
+      shopinfo: {},
+      getUserInfoButShow: false,
+
+    }
 
     computed = {
       
     }
 
-    methods = {}
+    methods = {
+      // 底部导航跳转
+      goPage (url, evt) {
+        // 销毁当前页{跳转}
+        this.$redirect(url)
+      },
+      // 进入使用说明页
+      goDescription() {
+        this.$navigate('/pages/description')
+      },
+      // 点击图片放大，长按后可操作
+      shareQRCodeImg(e) {
+        // 点击图片放大
+        this.shareQRCodeImg(e)
+      },
+      dialPhone(e) {
+        // 拨打电话执行
+        this.dialPhoneRun(e)
+      }
+    }
 
     onLoad() {
-      
+      this.userInfo = this.$parent.globalData.userInfo
+      this.requestImgUrl = this.$parent.globalData.requestImgUrl
+      // 获取商家信息
+      this.getShopInfo()
+    }
+    getShopInfo() {
+      this.shopinfo = {
+        'id': '1',
+        'shopName': '商家名称',
+        'phone': '18888888888',
+        'address': '沣东',
+      }
+    }
+    dialPhoneRun(e) {
+      // 拨打电话执行
+      let phone = e.target.dataset.phone
+      if (phone) {
+        wx.makePhoneCall({
+          phoneNumber: phone,
+          success: function () {
+            console.log('拨打电话成功！')
+          },
+          fail: function () {
+            console.log('拨打电话失败！')
+          }
+        })
+      }
+    }
+    shareQRCodeImg(e) {
+      // 点击图片放大
+      let imageUrl = e.target.dataset.image
+      wx.previewImage({
+        current: [imageUrl], // 当前显示图片的http链接   
+        urls: [imageUrl] // 需要预览的图片http链接列表   
+      })
+    }
+    // 控制背景图大小
+    autoImage(e) {
+      // 获取图片的狂傲
+      var imgW = e.detail.width
+      var imgH = e.detail.height
+      // 计算图片比例
+      var imgScale = imgW / imgH
+      // 声明自适应宽高变量
+      var autoW = ''
+      var autoH = ''
+      // 获取屏幕宽度，并将图片设置为屏幕等宽
+      wx.getSystemInfo({
+        success: res => {
+          autoW = res.windowWidth
+          autoH = autoW / imgScale
+          this.autoW = autoW
+          this.autoH = autoH
+          this.$apply()
+        }
+      })
     }
   }
 </script>

@@ -1,12 +1,31 @@
 <style lang="less">
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
+@font-face {
+  font-family: 'iconfont';  /* project id 1165734 */
+  src: url('//at.alicdn.com/t/font_1165734_hpqlnn1ub6t.eot');
+  src: url('//at.alicdn.com/t/font_1165734_hpqlnn1ub6t.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1165734_hpqlnn1ub6t.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1165734_hpqlnn1ub6t.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1165734_hpqlnn1ub6t.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1165734_hpqlnn1ub6t.svg#iconfont') format('svg');
 }
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size: 40rpx;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-guanggao:before { content: "\e664"; } // 广告
+.icon-tixian-copy:before { content: "\e61b"; } // 提现
+.icon-user:before { content: "\e600"; } // 个人中心
+.icon-dianpushidi:before { content: "\e677"; } // 店铺
+.icon-dianhua:before { content: "\e66a"; } // 电话
+.icon-fenxiang:before { content: "\e63d"; } // 分享
+.icon-hongbao:before { content: "\e640"; } // 红包
+.icon-qianqian:before { content: "\e6cf"; } // 钱币
+.icon-jine:before { content: "\e61e"; } // 钱袋
+.icon-tixianmingxi:before { content: "\e6c2"; } // 提现明细
+.icon-jianyi:before { content: "\e635"; } // 建议
 </style>
 
 <script>
@@ -22,7 +41,8 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index'
+      'pages/index',
+      'pages/user'
     ],
     window: {
       backgroundTextStyle: 'light',
