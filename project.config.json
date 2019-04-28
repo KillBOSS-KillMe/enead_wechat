@@ -1,16 +1,13 @@
 {
-	"description": "一诺尔广告",
-	"setting": {
-		"urlCheck": false,
-		"es6": false,
-		"postcss": false,
-		"minified": false,
-		"newFeature": true,
-		"autoAudits": false
-	},
-	"compileType": "miniprogram",
-	"appid": "wxc5390a62c8d01c15",
-	"projectname": "enead",
-	"miniprogramRoot": "dist/",
-	"condition": {}
+  "description": "一诺尔广告",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram",
+  "appid": "wxc5390a62c8d01c15",
+  "projectname": "nenad",
+  "miniprogramRoot": "./dist"
 }
