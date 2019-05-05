@@ -26,6 +26,14 @@
 .icon-jine:before { content: "\e61e"; } // 钱袋
 .icon-tixianmingxi:before { content: "\e6c2"; } // 提现明细
 .icon-jianyi:before { content: "\e635"; } // 建议
+
+
+.show {
+  display: block;
+}
+.hidden {
+  display: none;
+}
 </style>
 
 <script>

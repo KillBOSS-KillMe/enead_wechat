@@ -1,46 +1,499 @@
 <style lang="less">
-
+.users {
+  border: 2rpx solid gainsboro;
+  width: 95%;
+  height: 350rpx;
+  position: relative;
+  top: 20rpx;
+  left: 2.5%;
+  background-color: #fff;
+  border-radius: 20rpx;
+  background: linear-gradient(to right, #f86e09, #f29200, #f86e09);
+}
+.top_border {
+  border: 1px solid #fff;
+  width: 98%;
+  margin: 10rpx 1%;
+  border-radius: 20rpx;
+  height: 330rpx;
+}
+.userinfo {
+  margin-top: 100rpx;
+  margin-left: 50rpx;
+  color: #fff;
+  font-size: 30rpx;
+}
+.userinfo-avatar {
+  width: 158rpx;
+  height: 158rpx;
+  float: left;
+  border-radius: 50%;
+}
+.userinfo-nickname {
+  float: left;
+  margin-left: 40rpx;
+  line-height: 158rpx;
+  width:200rpx;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+.nickname {
+  font-size: 24rpx;
+}
+.top_right {
+  float: right;
+  margin-right: 40rpx;
+  line-height: 158rpx;
+}
+/* 中间 */
+.main_center {
+  width: 95%;
+  height: 150rpx;
+  line-height: 150rpx;
+  margin: 40rpx 2.5%;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+.center {
+  font-size: 30rpx;
+}
+.center_top {
+  width: 33.3%;
+  float: left;
+}
+.center_top_left {
+  line-height: 30rpx;
+  margin-left: 20rpx;
+  margin-top: 30rpx;
+}
+.center_rignt {
+  float: right;
+}
+.center_img {
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 10rpx;
+  vertical-align: middle;
+}
+/* 下 */
+.gong {
+  width: 95%;
+  margin-left: 2.5%;
+}
+.bottom {
+  width: 100%;
+  height: 84rpx;
+  float: left;
+  font-size: 24rpx;
+}
+.gong button{
+  background-color: #fff;
+  padding: 0;
+  text-align:left;
+}
+button::after {
+  border: none;
+  border-radius: 0;
+}
+.bottom_left {
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 30rpx;
+  color: red;
+}
+.bottom_right {
+  width: 20rpx;
+  height: 20rpx;
+  float: right;
+  margin-right: 30rpx;
+  margin-top: 35rpx;
+  vertical-align: bottom;
+}
+.bottom text {
+  line-height: 84rpx;
+  width: 100%;
+  height: 70rpx;
+  font-size: 24rpx;
+  margin-left: 20rpx;
+}
+.appointments {
+  position: absolute;
+  top: 200rpx;
+  left: 12.5%;
+  background: linear-gradient(to right, #f86e09, #f29200, #f86e09);
+  color: #fff;
+  border-radius: 40rpx;
+  font-size: 24rpx;
+  width: 75%;
+  height: 700rpx;
+  padding: 0 60rpx;
+  box-sizing: border-box;
+  z-index: 3;
+}
+.appointments_form {
+  color: #fff;
+  font-size: 24rpx;
+}
+.appointments_input {
+  border: 4rpx #fff dashed;
+  border-radius: 40rpx;
+  height: 80rpx;
+  box-sizing: border-box;
+  padding: 0 40rpx;
+  margin: 30rpx 0;
+  color: #fff;
+}
+.appointments_img {
+  position: relative;
+  top: -80rpx;
+  left: 120rpx;
+  width: 230rpx;
+  height: 124rpx;
+}
+.appointments_img1 {
+  position: relative;
+  top: -120rpx;
+  left: 200rpx;
+  width: 60rpx;
+  height: 100rpx;
+}
+.mod_btn {
+  margin: auto;
+  border-radius: 50%;
+  border: 6rpx solid #fff;
+  background: rgba(0, 0, 0, 0);
+  width: 130rpx;
+  height: 130rpx;
+  color: #fff;
+  font-size: 30rpx;
+  line-height: 120rpx;
+  font-weight: bold;
+}
+.user {
+  position: absolute;
+  top: 250rpx;
+  left: 12.5%;
+  background: linear-gradient(to right, #f86e09, #f29200, #f86e09);
+  color: #fff;
+  border-radius: 40rpx;
+  font-size: 24rpx;
+  width: 75%;
+  height: 600rpx;
+  padding: 0 60rpx;
+  box-sizing: border-box;
+  z-index: 3;
+}
+.titles {
+  margin-top: -50rpx;
+  font-weight: bold;
+  text-align: center;
+  font-size: 30rpx;
+}
+.user_form {
+  color: #fff;
+  font-size: 24rpx;
+}
+.user_input {
+  border: 4rpx #fff dashed;
+  border-radius: 40rpx;
+  height: 80rpx;
+  box-sizing: border-box;
+  padding: 0 40rpx;
+  margin: 50rpx 0;
+  color: #fff;
+}
+.user_img {
+  position: relative;
+  top: -70rpx;
+  left: 60rpx;
+  width: 300rpx;
+  height: 124rpx;
+}
+.user_img1 {
+  position: relative;
+  top: -120rpx;
+  left: 120rpx;
+  width: 60rpx;
+  height: 100rpx;
+}
 </style>
 <template>
   <view>
-    用户页用户页用户页用户页
+    <view class='users'>
+      <view class="top_border">
+        <view class="userinfo">
+          <!-- <block> -->
+            <!-- @tap="goUserInfo" 修改个人信息弹框触发时间事件,暂无此需求,不予调用 -->
+            <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover" />
+            <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+            <view class="top_right" @tap="goAdmission">{{hasShopInfo}}</view>
+          <!-- </block> -->
+        </view>
+      </view>
+    </view>
+    <!-- 中间 -->
+    <view>
+      <view class="main_center">
+        <view class="center">
+          <view class="center_top">
+            <view class="center_top_left">红包金额</view>
+              <view class="center_top_left" style='color:red;'>{{hongbao}}</view>
+            </view>
+            <view class="center_top" style='text-align:center' @tap="withdraw">
+              提现
+              <image src='/img/jiantou1.png' class="center_img" />
+            </view>
+            <view class="center_rignt" @tap="withdrawList">
+              提现明细
+            <image src='/img/jiantou1.png' class="center_img" />
+          </view>
+        </view>
+      </view>
+   </view>
+    <!-- 下 -->
+    <view class='gong'>
+      <view @tap="walletIn" class='bottom'>
+        <image src='/img/order.png' class="bottom_left" />
+        <text>钱包入账明细</text>
+        <image src='/img/jiantou2.png' class="bottom_right"/>
+      </view>
+      <button class="bottom" open-type="contact" session-from="weapp">
+        <image src='/img/tui.png' class="bottom_left" />
+        <text>提点建议吧</text>
+        <image src='/img/jiantou2.png' class="bottom_right"/>
+      </button>
+      <!-- <view @tap="orderList" class='bottom'>
+        <image src='/img/order.png' class="bottom_left" />
+        <text>我的预约</text>
+        <image src='/img/jiantou2.png' class="bottom_right"/>
+      </view> -->
+      <!-- <view @tap="winningList" class='bottom'>
+        <image src='/img/luckyDraw.png' class="bottom_left" />
+        <text>中奖明细</text>
+        <image src='/img/jiantou2.png' class="bottom_right" />
+      </view> -->
+    </view>
+    <!--入驻 -->
+    <view class="mask {{selected?'show':'hidden'}}">
+      <view class="appointments">
+        <image src="/img/join.png" class="appointments_img" />
+        <image src="/img/appointment_close.png" class="appointments_img1" @tap="goAdmission"/>
+        <view class="titles">
+            <view>门店入驻信息</view>
+        </view>
+        <form class="appointment_form" bindsubmit='admission'>
+          <input placeholder='店铺名称' class="appointments_input" name="name" />
+          <input placeholder='电话' class="appointments_input" name="phone" />
+          <input placeholder='地址' class="appointments_input" name="address" />
+          <button class="mod_btn" formType="submit">提交</button>
+        </form>
+      </view>
+    </view>
+    <!--个人信息 -->
+    <view class="mask {{selected1?'show':'hidden'}}">
+      <view class="user">
+        <image src="/img/user_title.png" class="user_img" />
+        <image src="/img/appointment_close.png" class="user_img1" @tap="goUserInfo" />
+        <view class="titles">
+          <view>个人信息填写——必填</view>
+        </view>
+        <form class="user_form" bindsubmit='userInfo'>
+          <input placeholder='姓名' class="user_input" name="user_name" value="{{user_name}}" />
+          <input placeholder='电话' class="user_input" name="user_phone" value="{{user_phone}}" />
+          <button class="mod_btn" formType="submit">提交</button>
+        </form>
+      </view>
+    </view>
     <nav @childFn.user="goPage" />
   </view>
 </template>
 
 <script>
-  import wepy from 'wepy'
-  import nav from '../components/nav' // 底部导航
-  export default class User extends wepy.page {
-    config = {
-      navigationBarTitleText: '个人中心'
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+import check from '../mixins/check' // 校验封装
+export default class User extends wepy.page {
+  config = {
+    'navigationBarTitleText': '个人中心'
+  };
+  mixins = [check]
+  // 生命组件ID
+  components = {
+    // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    motto: 'Hello World',
+    userInfo: null,
+    selected: false,
+    selected1: false,
+    code: null,
+    hasShop: false,
+    hongbao: '0.00',
+    hongbaoTotal: '0.00',
+    hasShopInfo: ''
+  };
+  methods = {
+    goPage(url, evt) {
+      this.$redirect(url)
+    },
+    goAdmission() {
+      if (this.hasShop) {
+        this.$navigate('/pages/shop')
+        return
+      }
+      // 显示/关闭入驻店铺表单
+      if (this.selected) {
+        this.selected = false
+      } else {
+        this.selected = true
+      }
+    },
+    async admission(event) {
+      // 入驻提交
+      let name = event.detail.value.name
+      let phone = event.detail.value.phone
+      let address = event.detail.value.address
+      if (this.check.isNull(name)) {
+        wepy.showModal({
+          title: '',
+          content: '请输入名字',
+          showCancel: false
+        })
+        return
+      }
+      if (this.check.isPhone(phone)) {
+        wepy.showModal({
+          title: '',
+          content: '输入联系电话',
+          showCancel: false
+        })
+        return
+      }
+      if (this.check.isNull(address)) {
+        wepy.showModal({
+          title: '',
+          content: '输入详细地址',
+          showCancel: false
+        })
+        return
+      }
+      await wepy.login().then(res => {
+        this.code = res.code
+      })
+      // 发送请求,入驻店铺
+      await wx.request({
+        url: `${this.$parent.globalData.requestUrl}/shop/store`,
+        method: 'POST',
+        data: {
+          code: this.code,
+          address: address,
+          phone: phone,
+          name: name
+        },
+        success: data => {
+          if (this.selected) {
+            this.selected = false
+          } else {
+            this.selected = true
+          }
+          wepy.showModal({
+            title: '',
+            content: '入驻成功',
+            showCancel: false
+          })
+          this.hasShopInfo = '进入店铺>>'
+          this.$apply()
+          setTimeout(e => {
+            this.$navigate('/pages/shop')
+          }, 2000)
+          // this.onShow()
+        }
+      })
+    },
+    // 显示个人信息修改from表单
+    goUserInfo() {
+      // 个人信息
+      if (this.selected1) {
+        this.selected1 = false
+      } else {
+        this.selected1 = true
+      }
+    },
+    // 修改个人信息
+    userInfo(event) {
+      // 个人信息提交
+      let name = event.detail.value.user_name
+      let phone = event.detail.value.user_phone
+      if (this.check.isNull(name)) {
+        wepy.showModal({
+          title: '',
+          content: '请输入名字',
+          showCancel: false
+        })
+      }
+      if (this.check.isPhone(phone)) {
+        wepy.showModal({
+          title: '',
+          content: '输入联系电话',
+          showCancel: false
+        })
+      }
+      // 发送请求
     }
-    components = {
-      nav: nav
-    }
-
-    mixins = []
-
-    data = {
-      userInfo: {},
-      requestImgUrl: ''
-    }
-
-    computed = {
-      
-    }
-
-    methods = {
-      // 底部导航跳转
-      goPage (url, evt) {
-        // 销毁当前页{跳转}
-        this.$redirect(url)
+  };
+  async onShow() {
+    // 获取全局变量:用户信息  存入本页
+    this.userInfo = this.$parent.globalData.userInfo
+    this.$apply()
+    await wepy.login().then(res => {
+      this.code = res.code
+    })
+    await wx.request({
+      url: `${this.$parent.globalData.requestUrl}/wallet/show`,
+      method: 'POST',
+      data: {
+        code: this.code
       },
-    }
-
-    onLoad() {
-      this.userInfo = this.$parent.globalData.userInfo
-      this.requestImgUrl = this.$parent.globalData.requestImgUrl
-    }
-  }
+      success: data => {
+        // 是否入驻店铺
+        this.hasShop = data.data.has_shop
+        if (this.hasShop) {
+          this.hasShopInfo = '进入店铺>>'
+        } else {
+          this.hasShopInfo = '入驻店铺>>'
+        }
+        this.$apply()
+        // 现有红包金额
+        this.hongbao = data.data.hongbao
+        this.$parent.globalData.userShopInfo = data.data
+        // 红包总金额
+        this.hongbaoTotal = data.data.hongbao_total
+        this.$apply()
+      }
+    })
+  };
+  // 提现
+  withdraw() {
+    this.$navigate('/pages/withdraw')
+  };
+  // 钱包入账明细
+  walletIn() {
+    this.$navigate('/pages/userWalletIn')
+  };
+  // 提现明细
+  withdrawList() {
+    this.$navigate('/pages/userWalletOut')
+  };
+  // 订单列表
+  orderList() {
+    this.$navigate('/pages/orderList')
+  };
+  // 中奖明细
+  winningList() {
+    this.$navigate('/pages/winningList')
+  };
+}
 </script>
