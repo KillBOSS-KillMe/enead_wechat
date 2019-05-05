@@ -34,6 +34,12 @@
 .hidden {
   display: none;
 }
+.listMessage{
+  height: 200rpx;
+  line-height: 200rpx;
+  color: #888;
+  text-align: center
+}
 </style>
 
 <script>
@@ -49,8 +55,18 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index',
-      'pages/user'
+      'pages/user', // 个人中心
+      'pages/userWalletIn', // 入账明细
+      'pages/withdraw', // 提现
+      'pages/userWalletOut', // 提现明细
+
+      'pages/shop', // 店铺首页
+      'pages/advertising', // 发布广告
+      'pages/adList', // 我的广告
+      'pages/adDetails', // 广告详情
+      'pages/shopRecharge', // 广告金充值
+      'pages/index', // 广告页
+      
     ],
     window: {
       backgroundTextStyle: 'light',

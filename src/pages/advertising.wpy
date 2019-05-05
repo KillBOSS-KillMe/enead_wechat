@@ -1,0 +1,425 @@
+<style lang="less">
+.appointment {
+  position: absolute;
+  background: #7bb312;
+  color: #fff;
+  font-size: 24rpx;
+  width: 100%;
+  height: 100%;
+  padding: 0 60rpx;
+  box-sizing: border-box;
+}
+
+.title {
+  margin-top: 20rpx;
+  font-weight: bold;
+}
+.appointment_form {
+  color: #fff;
+  font-size: 24rpx;
+}
+
+.appointment_input {
+  border: 4rpx #fff dashed;
+  border-radius: 40rpx;
+  height: 80rpx;
+  box-sizing: border-box;
+  padding: 0 40rpx;
+  margin: 30rpx 0;
+  color: #fff;
+}
+
+.appointment_img {
+  position: relative;
+  top: -80rpx;
+  left: 120rpx;
+  width: 230rpx;
+  height: 124rpx;
+}
+
+.appointment_img1 {
+  position: relative;
+  top: -120rpx;
+  left: 200rpx;
+  width: 60rpx;
+  height: 100rpx;
+}
+
+.mod_btn {
+  margin: auto;
+  border-radius: 50%;
+  border: 6rpx solid #fff;
+  background: rgba(0, 0, 0, 0);
+  width: 130rpx;
+  height: 130rpx;
+  color: #fff;
+  font-size: 30rpx;
+  line-height: 120rpx;
+  font-weight: bold;
+}
+// 图片
+.weui-uploader__title{
+clear: both;
+font-size: 12px;
+color:#999;
+}
+.weui-uploader__file{
+margin-left: 80px;
+}
+.weui-uploader__img {
+width: 70px;
+height: 70px;
+float:left;
+}
+.weui-uploader__input-box {
+position: relative;
+margin-right: 9px;
+margin-bottom: 9px;
+width: 70px;
+height: 70px;
+border: 1px solid #d9d9d9;
+}
+.weui-uploader__input-box:before, .weui-uploader__input-box:after {
+content: " ";
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background-color: #d9d9d9;
+}
+.weui-uploader__input-box:before {
+width: 2px;
+height: 39.5px;
+}
+.weui-uploader__input-box:after {
+width: 39.5px;
+height: 2px;
+}
+.weui-uploader__input {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+opacity: 0;
+}
+
+.mask{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(242,142,2,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index:10;
+}
+.prompt{
+  width: 500rpx;
+  height: 368rpx;
+  background-color: #fff;
+  border-radius: 30rpx;
+  position: relative;
+}
+.promptInfo{
+  height: 250rpx;
+  line-height: 250rpx;
+  text-align: center;
+  color: #333;
+}
+.prompt .button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button-hover[type=primary] {
+background-color: #f97008;
+}
+button[type=primary] {
+  color:#FFFFFF;
+  background-color: #f97008;
+}
+
+.shareIt{
+  width: 282rpx;
+  height: 120rpx;
+  line-height: 120rpx;
+  background-color: #f97008;
+  border: 2rpx solid #fff;
+  text-align: center;
+  padding: 0;
+  font-size: 30rpx;
+  color: #fff;
+}
+.hidePrompt{
+  position: absolute;
+  right:15rpx;
+  top:10rpx;
+  color:#333;
+  font-size:40rpx;
+}
+
+</style>
+<template>
+  <view class="mask {{selected?'show':'hidden'}}">
+    <view class="appointment">
+      <view class="title">
+        <view>广告发布,活动发布</view>
+        <view>{{shopInfo.name}}店铺广告创建</view>
+        <view>储蓄金：{{shopInfo.reserve}}</view>
+      </view>
+      <form class="appointment_form" bindsubmit='setAdvertising'>
+          <input type="text" placeholder='广告名称' class="appointment_input" name="name" value="{{name}}"/>
+          <input type="digit" placeholder='红包总金额' class="appointment_input" name="money" value="{{money}}"/>
+          <input type="digit" placeholder='红包发放数量' class="appointment_input" name="num" value="{{num}}"/>
+          <view class="street_detail" id="adinfoP">
+            <text class="tit">添加照片：</text>
+              <view class="weui-cell">
+                <view class="weui-cell__bd">
+                  <view class="weui-uploader">
+                  <view class="weui-uploader__hd">
+                  <view class="weui-uploader__title"></view>
+                  </view>
+                    <view class="weui-uploader__bd" style="margin-left:20px">
+                      <view class="weui-uploader__file">
+                        <image class="weui-uploader__img" name="image" src="{{image}}" data-image="{{image}}" @tap="previewImage" />
+                      </view>
+                      <!-- isShow 这个是判断是否进行触发点隐藏操作-->
+                      <view class="weui-uploader__input-box {{isShow?'true':'hideTrue'}}">
+                        <view class="weui-uploader__input" @tap="chooseImage"></view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+          </view>
+          <button class="mod_btn" formType="submit">提交</button>
+      </form>
+    </view>
+    <view class="mask" wx:if="{{promptShow}}">
+      <view class="prompt">
+        <view class="hidePrompt" @tap="prompthide">ⓧ</view>
+        <view class="promptInfo">广告创建成功,是否分享</view>
+        <view class="button">
+          <button class="shareIt" @tap="goIndex">返回首页</button>
+          <button class="shareIt" type="primary" open-type="share" data-name="pageShare" id="share">{{shareText}}</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+// 校验封装
+import check from '../mixins/check'
+export default class Advertising extends wepy.page {
+  mixins = [check]
+  config = {
+    'navigationBarTitleText': '活动管理'
+  };
+  // 生命组件ID
+  components = {};
+  // alias example
+  data = {
+    shopInfo: null,
+    reserveList: null,
+    userInfo: null,
+    code: '',
+    image: '',
+    imgSize: 0,
+    advertisingName: '',
+    money: '',
+    promptShow: false,
+    title: '',
+    adImage: '',
+    uuid: '',
+    shareText: '分享'
+  };
+  methods = {
+    previewImage(e) {
+      var current = e.target.dataset.src
+      wx.previewImage({
+        current: current,
+        urls: this.data.pics
+      })
+    },
+    chooseImage() {
+      wx.chooseImage({
+        // 最多可以选择的图片张数，默认9
+        count: 1,
+        // original 原图，compressed 压缩图，默认二者都有
+        sizeType: ['original', 'compressed'],
+        // album 从相册选图，camera 使用相机，默认二者都有
+        sourceType: ['album', 'camera'],
+        success: res => {
+          this.imgSize = res.tempFiles[0].size
+          // 判断图片大小1024000
+          if (this.imgSize > 1024000) {
+            wepy.showModal({
+              title: '',
+              content: '上传图片大小不可大于1兆(1M)',
+              showCancel: false
+            })
+            // return后不会执行添加图片对象部分，form表单请求出可以不做校验
+            return
+          }
+          var tempFilePaths = res.tempFilePaths
+          // 获取图片路径
+          this.image = tempFilePaths[0]
+          this.$apply()
+        },
+        fail() {},
+        complete() {}
+      })
+    },
+    async setAdvertising(event) {
+      // 提交活动信息
+      // 红包个数
+      let num = event.detail.value.num
+      // 广告名
+      let newAdvertisingName = event.detail.value.name
+      // 红包总金额
+      let total = event.detail.value.money
+      let newImage = this.image
+      // 储蓄金
+      let reserve = this.shopInfo.reserve
+      reserve = parseFloat(reserve)
+      if (this.check.isNull(newAdvertisingName)) {
+        wepy.showModal({
+          title: '',
+          content: '请输入广告名称',
+          showCancel: false
+        })
+        return
+      }
+      if (this.check.isMoney(total)) {
+        wepy.showModal({
+          title: '',
+          content: '输入红包总金额',
+          showCancel: false
+        })
+        return
+      }
+      if (total <= 0) {
+        wepy.showModal({
+          title: '',
+          content: '红包金额不可小于等于0',
+          showCancel: false
+        })
+        return
+      }
+      if (this.check.isNum(num)) {
+        wepy.showModal({
+          title: '',
+          content: '红包数量必须为整数',
+          showCancel: false
+        })
+        return
+      }
+      if (reserve < total) {
+        wepy.showModal({
+          title: '',
+          content: '储蓄金不足',
+          showCancel: false
+        })
+        return
+      }
+      if (this.check.isNull(newImage)) {
+        wepy.showModal({
+          title: '',
+          content: '请选择图片',
+          showCancel: false
+        })
+        return
+      }
+      num = parseInt(num)
+      total = parseFloat(total)
+      // 单个红包金额
+      let step = total / num
+      // 保留两位小数
+      step = Math.round(step * 100) / 100
+      // 判断单个红包金额是否小于0.01
+      if (step < 0.01) {
+        wepy.showModal({
+          title: '',
+          content: '红包金额过小或个数过多,单个红包不可小于0.01',
+          showCancel: false
+        })
+      }
+      await wepy.login().then(res => {
+        this.code = res.code
+      })
+      // 发送请求,发布广告
+      await wx.uploadFile({
+        url: `${this.$parent.globalData.requestUrl}/ad/store`,
+        header: {
+          "Content-Type": "multipart/form-data"
+        },
+        filePath: newImage,
+        name: 'image',
+        formData: {
+          code: this.code,
+          title: newAdvertisingName, // 广告名称
+          step: step, // 单个红包金额
+          total: total // 总数金额
+        },
+        success: data => {
+          if (data.statusCode === 201) {
+            this.$parent.globalData.uuid = ''
+            data = JSON.parse(data.data)
+            this.title = data.data.title
+            this.adImage = data.data.ad
+            this.uuid = data.data.uuid
+            this.promptShow = true
+            this.$apply()
+            // this.$navigate('/pages/index')
+            // wepy.showModal({
+            //   title: '',
+            //   content: '创建广告成功',
+            //   showCancel: false
+            // })
+            // // 两秒后返回上一页
+            // setTimeout(e => {
+            //   wx.navigateBack({ changed: true })
+            // }, 2000)
+            return
+          }
+          if (data.statusCode === 400) {
+            data = data.data
+            wepy.showModal({
+              title: '',
+              content: data.message,
+              showCancel: false
+            })
+          }
+        }
+      })
+    }
+  };
+  goIndex() {
+    this.$navigate('/pages/index')
+  }
+  prompthide() {
+    // 隐藏弹框
+    this.promptShow = false
+    this.$apply()
+  }
+  // 分享页面
+  onShareAppMessage(res) {
+    var url = `pages/index?uuid=${this.uuid}`
+    this.shareText = '继续分享'
+    this.$apply()
+    return {
+      title: this.title,
+      desc: '',
+      // 图片路径
+      imageUrl: this.adImage,
+      path: url
+    }
+  };
+  async onLoad() {
+    this.shopInfo = this.$parent.globalData.shopInfo
+  };
+}
+</script>

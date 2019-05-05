@@ -115,11 +115,9 @@
 <script>
 import wepy from 'wepy'
 export default class Nav extends wepy.component {
-  // mixins = [check]
   data = {
     navAction: ['action', 'noAction']
   };
-  props = {};
   methods = {
     // 首页
     goIndex() {

@@ -1,0 +1,277 @@
+<style lang="less">
+.activity{
+  width: 100%;
+}
+.buy{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 100rpx;
+  color: #fff;
+  font-size: 30rpx;
+  text-align: center;
+  display: flex;
+  line-height: 100rpx;
+}
+.buy .recharge{
+  width: 375rpx;
+  height: 100rpx;
+  background-color: #f39900;
+}
+.buy .shareIt{
+  width: 750rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  background-color: #ff4a00;
+}
+
+.title {
+  margin-top: 20rpx;
+  font-weight: bold;
+}
+.shopInfo{
+  height: auto;
+  color: #999;
+  font-size: 30rpx;
+  padding: 30rpx;
+  margin-bottom:100rpx;
+}
+.shopName{
+  font-weight: 700
+}
+.shopInfo view{
+  height: auto;
+  min-height: 50rpx;
+  line-height: 50rpx;
+}
+
+.winDetail {
+    width: 95%;
+    border: 1px solid #eee;
+    border-radius: 20rpx;
+    height: 110rpx;
+    margin: 10rpx 2.5%;
+    color: #333;
+    box-sizing: border-box;
+    padding: 10rpx 0;
+}
+
+.winDetail_img image {
+    width: 78rpx;
+    height: 78rpx;
+    float: left;
+    margin-left: 20rpx;
+    border-radius: 50%;
+    margin-top: 10rpx;
+}
+
+.winDetail_center {
+    float: left;
+    margin-left: 20rpx;
+    font-size: 40rpx;
+}
+
+.winDetail_center view {
+  font-size: 30rpx;
+    width: 300rpx;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+.winDetail_text {
+    font-size: 28rpx;
+    margin-top: 10rpx;
+}
+
+.winDetail_right {
+    float: right;
+    margin-right: 20rpx;
+    text-align: right;
+    font-size: 20rpx;
+    line-height: 35rpx;
+}
+.getMoneyList{
+  width: 100%;
+  max-height: 800rpx;
+  height: auto;
+  border: 1prx solid #000;
+}
+</style>
+<template>
+  <view>
+    <scroll-view scroll-y class="getMoneyList">
+<!-- getMoneyList -->
+      <repeat for="{{getMoneyList}}" key="index" index="index" item="item">
+        <view class="winDetail" data-index="{{index}}">
+          <view class="winDetail_img">
+            <image src="{{item.user.avatar}}" class=""/>
+          </view>
+          <view class="winDetail_center">
+            <view>{{item.user.nick_name}}</view>
+            <view class="winDetail_text">{{title}}</view>
+          </view>
+          <view class="winDetail_right">
+            <view>{{item.in}}¥</view>
+            <view>{{item.created_at}}</view>
+            <view class="winDetail_title"> </view>
+          </view>
+        </view>
+      </repeat>
+      <view class="listMessage" wx:if="{{nextUrl != '' && getMoneyList.length != 0}}" @tap="getMoreList">显示更多</view>
+      <view class="listMessage" wx:if="{{nextUrl === '' && getMoneyList.length != 0}}">已无更多纪录,共{{allTotal}}人领取</view>
+      <view class="listMessage" wx:if="{{getMoneyList.length == 0}}">暂无领取纪录</view>
+    </scroll-view>
+    <!-- 活动主图 -->
+    <image src="{{adImage}}" style="width:{{autoW}}px;height:{{autoH}}px" bindload='autoImage' class="activity {{indexloading}}" />
+    <view class="shopInfo">
+      <view class="shopName">{{title}}</view>
+      <view @tap="dialPhone">电话:{{shopInfo.phone}}</view>
+      <view>广告余额:{{total}}</view>
+    </view>
+    <view class="buy">
+      <!-- <view class="recharge" @tap="setShopCart">充值</view> -->
+      <button class="shareIt" type="primary" open-type="share" data-name="pageShare" id="share">分享</button>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+import check from '../mixins/check'
+// import author from '../components/author' // 授权按钮
+export default class Addetails extends wepy.page {
+  mixins = [check]
+  config = {
+    'navigationBarTitleText': '广告详情'
+  };
+  // 生命组件ID
+  components = {
+    // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    autoW: 0,
+    autoH: 0,
+    adImage: '',
+    image: '',
+    title: '',
+    id: '',
+    uuid: '',
+    total: 0,
+    userInfo: null,
+    shopInfo: null,
+    getMoneyList: null,
+    nextUrl: '',
+    allTotal: 0 // 共几人领取
+  };
+
+  methods = {
+
+  };
+  async onLoad(options) {
+    this.adImage = options.ad
+    this.title = options.title
+    this.id = options.id
+    this.uuid = options.uuid
+    this.total = options.total
+    this.userInfo = this.$parent.globalData.userInfo
+    this.shopInfo = this.$parent.globalData.shopInfo
+    this.getAdUserInfo()
+  };
+  async getAdUserInfo() {
+    await wepy.login().then(res => {
+      this.code = res.code
+    })
+    await wx.request({
+      url: `${this.$parent.globalData.requestUrl}/shop/reserve_in_show_by_uuid`,
+      method: 'POST',
+      data: {
+        code: this.code,
+        uuid: this.uuid
+      },
+      success: data => {
+        if (data.statusCode === 200) {
+          let getMoneyList = data.data.data.data
+          this.getMoneyList = getMoneyList
+          this.allTotal = data.data.data.total
+          this.$apply()
+          // 获取下一页的请求Id
+          this.nextUrl = ''
+          this.nextUrl = data.data.next_page_url
+        }
+      }
+    })
+  };
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  async getMoreList() {
+    if (!this.nextUrl) {
+      return
+    }
+    await wepy.login().then(res => {
+      this.code = res.code
+    })
+    await wx.request({
+      url: this.nextUrl,
+      method: 'POST',
+      data: {
+        code: this.code,
+        uuid: this.uuid
+      },
+      success: data => {
+        if (data.statusCode === 200) {
+          let getMoneyList = data.data.data.data
+          // 将新的请求结果加入原有数组  concat连接两个或更多的数组，并返回结果。
+          this.getMoneyList = this.getMoneyList.concat(getMoneyList)
+          this.$apply()
+          // 更新下一页请求地址
+          this.nextUrl = ''
+          this.nextUrl = data.data.next_page_url
+        }
+      }
+    })
+  }
+  // 控制背景图大小
+  autoImage(e) {
+    // 获取图片的狂傲
+    var imgW = e.detail.width
+    var imgH = e.detail.height
+    // 计算图片比例
+    var imgScale = imgW / imgH
+    // 声明自适应宽高变量
+    var autoW = ''
+    var autoH = ''
+    // 获取屏幕宽度，并将图片设置为屏幕等宽
+    wx.getSystemInfo({
+      success: res => {
+        autoW = res.windowWidth
+        autoH = autoW / imgScale
+        this.autoW = autoW
+        this.autoH = autoH
+        this.$apply()
+      }
+    })
+  }
+  prompthide() {
+    // 隐藏弹框
+    this.promptShow = false
+    this.$apply()
+  }
+  // 分享页面
+  onShareAppMessage(res) {
+    let url = `pages/index?uuid=${this.uuid}`
+    console.log(url)
+    // this.prompthide()
+    return {
+      title: this.title,
+      desc: '',
+      // 图片路径
+      imageUrl: this.adImage,
+      path: url
+    }
+  };
+}
+</script>
