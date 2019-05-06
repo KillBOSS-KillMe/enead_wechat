@@ -124,9 +124,7 @@ export default class Adlist extends wepy.page {
 
   // 广告列表
   async getAdList() {
-    await wepy.login().then(res => {
-      this.code = res.code
-    })
+    this.code = await this.$parent.login()
     await wx.request({
       url: `${this.$parent.globalData.requestUrl}/ad/index`,
       method: 'POST',
@@ -153,9 +151,7 @@ export default class Adlist extends wepy.page {
     if (!this.nextUrl) {
       return
     }
-    await wepy.login().then(res => {
-      this.code = res.code
-    })
+    this.code = await this.$parent.login()
     await wx.request({
       url: this.nextUrl,
       method: 'POST',

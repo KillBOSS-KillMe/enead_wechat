@@ -135,9 +135,7 @@ export default class shopRecharge extends wepy.page {
       }
       upDataM = parseFloat(upDataM)
       reserve = parseFloat(reserve)
-      await wepy.login().then(res => {
-        this.code = res.code
-      })
+      this.code = await this.$parent.login()
       // loading图片显示
       this.loadingImgShow = true
       this.$apply()

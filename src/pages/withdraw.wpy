@@ -159,9 +159,7 @@ export default class Withdraw extends wepy.page {
       // loading图片显示
       this.loadingImg = true
       this.$apply()
-      await wepy.login().then(res => {
-        this.code = res.code
-      })
+      this.code = await this.$parent.login()
       await wx.request({
         url: `${this.$parent.globalData.requestUrl}/wallet/out`,
         method: 'POST',

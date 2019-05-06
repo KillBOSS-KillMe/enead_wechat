@@ -322,7 +322,7 @@ button[type=primary] {
       </view>
     </view>
     <view>
-      <button open-type="getUserInfo" wx:if='{{getUserInfoButShow}}' id='getUserInfo' lang="zh_CN" @getuserinfo="onGetUserInfo">{{time}}</button>
+      <button open-type="getUserInfo" wx:if='{{getUserInfoButShow}}' id='getUserInfo' lang="zh_CN" @getuserinfo="onGetUserInfo"></button>
     </view>
     <nav @childFn.user="goPage" />
   </view>
@@ -464,13 +464,20 @@ button[type=primary] {
     }
     async setUserInfo(userInfo) {
       // 从组件中获取userInfo
-      await wepy.login().then(res => {
-        console.log(res.code)
-        this.code = res.code
-      })
+      // await wx.login({
+      //   success: res => {
+      //     this.code = res.code
+      //   }
+      // })
+      this.code = await this.$parent.login()
+      console.log(this.code + '-----')
+      // await wx.login().then(res => {
+      //   console.log(res.code)
+      //   this.code = res.code
+      // })
       // 获取用户信息
-      this.userInfo = JSON.parse(userInfo)
-      this.$parent.globalData.userInfo = JSON.parse(userInfo)
+      this.userInfo = userInfo
+      this.$parent.globalData.userInfo = userInfo
       // 发送请求,存储用户信息
       await wx.request({
         url: `${this.$parent.globalData.requestUrl}/user/store`,

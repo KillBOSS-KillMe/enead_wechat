@@ -395,9 +395,7 @@ export default class User extends wepy.page {
         })
         return
       }
-      await wepy.login().then(res => {
-        this.code = res.code
-      })
+      this.code = await this.$parent.login()
       // 发送请求,入驻店铺
       await wx.request({
         url: `${this.$parent.globalData.requestUrl}/shop/store`,
@@ -463,9 +461,7 @@ export default class User extends wepy.page {
     // 获取全局变量:用户信息  存入本页
     this.userInfo = this.$parent.globalData.userInfo
     this.$apply()
-    await wepy.login().then(res => {
-      this.code = res.code
-    })
+    this.code = await this.$parent.login()
     await wx.request({
       url: `${this.$parent.globalData.requestUrl}/wallet/show`,
       method: 'POST',

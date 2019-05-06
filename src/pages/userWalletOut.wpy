@@ -104,9 +104,7 @@ export default class Userwalletin extends wepy.page {
   methods = {};
   async onLoad() {
     this.userInfo = this.$parent.globalData.userInfo
-    await wepy.login().then(res => {
-      this.code = res.code
-    })
+    this.code = await this.$parent.login()
     await wx.request({
       url: `${this.$parent.globalData.requestUrl}/wallet/out_show`,
       method: 'POST',
@@ -147,9 +145,7 @@ export default class Userwalletin extends wepy.page {
       this.$apply()
       return
     }
-    await wepy.login().then(res => {
-      this.code = res.code
-    })
+    this.code = await this.$parent.login()
     await wx.request({
       url: this.getUrl,
       method: 'POST',

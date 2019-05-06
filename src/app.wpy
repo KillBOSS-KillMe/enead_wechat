@@ -93,7 +93,14 @@ export default class extends wepy.app {
   onLaunch() {
     
   }
-
+  async login() {
+    await wx.login({
+      success: res => {
+        console.log(res.code)
+        return res.code
+      }
+    })
+  }
 
 
   getUserInfo(cb) {

@@ -349,9 +349,7 @@ export default class Advertising extends wepy.page {
           showCancel: false
         })
       }
-      await wepy.login().then(res => {
-        this.code = res.code
-      })
+      this.code = await this.$parent.login()
       // 发送请求,发布广告
       await wx.uploadFile({
         url: `${this.$parent.globalData.requestUrl}/ad/store`,
