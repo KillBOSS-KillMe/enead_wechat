@@ -255,16 +255,19 @@ button::after {
       <view class="main_center">
         <view class="center">
           <view class="center_top">
-            <view class="center_top_left">红包金额</view>
-              <view class="center_top_left" style='color:red;'>{{hongbao}}</view>
+            <view class="center_top_left">
+              红包金额
+              <icon class="iconfont icon-jine"></icon>
+            </view>
+            <view class="center_top_left" style='color:red;'>{{hongbao}}</view>
             </view>
             <view class="center_top" style='text-align:center' @tap="withdraw">
               提现
-              <icon class="iconfont icon-fenxiang"></icon>
+              <icon class="iconfont icon-tixian"></icon>
             </view>
             <view class="center_rignt" @tap="withdrawList">
               提现明细
-              <icon class="iconfont icon-fenxiang"></icon>
+              <icon class="iconfont icon-tixianmingxi"></icon>
           </view>
         </view>
       </view>
@@ -274,12 +277,12 @@ button::after {
       <view class='selNav' @tap="walletIn">
         <icon class="iconfont icon-fenxiang"></icon>
         <view>钱包入账明细</view>
-        <icon class="iconfont icon-fenxiang"></icon>
+        <icon class="iconfont icon-xiangyou"></icon>
       </view>
       <button class="selNav" open-type="contact" session-from="weapp">
-        <icon class="iconfont icon-fenxiang"></icon>
+        <icon class="iconfont icon-jianyi"></icon>
         <view>提点建议吧</view>
-        <icon class="iconfont icon-fenxiang"></icon>
+        <icon class="iconfont icon-xiangyou"></icon>
       </button>
     </view>
     <!--入驻 -->
@@ -314,6 +317,7 @@ button::after {
         </form>
       </view>
     </view>
+    店铺入驻需要提交数据：店铺名，联系电话，地址（地址可不输入）
     <nav @childFn.user="goPage" />
   </view>
 </template>

@@ -1,12 +1,12 @@
 <style lang="less">
 @font-face {
   font-family: 'iconfont';  /* project id 1165734 */
-  src: url('//at.alicdn.com/t/font_1165734_hpqlnn1ub6t.eot');
-  src: url('//at.alicdn.com/t/font_1165734_hpqlnn1ub6t.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1165734_hpqlnn1ub6t.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1165734_hpqlnn1ub6t.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1165734_hpqlnn1ub6t.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1165734_hpqlnn1ub6t.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1165734_dn0zb8ykexs.eot');
+  src: url('//at.alicdn.com/t/font_1165734_dn0zb8ykexs.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1165734_dn0zb8ykexs.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1165734_dn0zb8ykexs.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1165734_dn0zb8ykexs.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1165734_dn0zb8ykexs.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family:"iconfont" !important;
@@ -16,7 +16,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 .icon-guanggao:before { content: "\e664"; } // 广告
-.icon-tixian-copy:before { content: "\e61b"; } // 提现
+.icon-tixian:before { content: "\e61b"; } // 提现
 .icon-user:before { content: "\e600"; } // 个人中心
 .icon-dianpushidi:before { content: "\e677"; } // 店铺
 .icon-dianhua:before { content: "\e66a"; } // 电话
@@ -26,6 +26,7 @@
 .icon-jine:before { content: "\e61e"; } // 钱袋
 .icon-tixianmingxi:before { content: "\e6c2"; } // 提现明细
 .icon-jianyi:before { content: "\e635"; } // 建议
+.icon-xiangyou:before { content: "\e605"; } // 建议
 
 
 .show {
@@ -55,6 +56,9 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
+      'pages/index', // 广告页
+      'pages/description', // 使用说明
+
       'pages/user', // 个人中心
       'pages/userWalletIn', // 入账明细
       'pages/withdraw', // 提现
@@ -66,7 +70,7 @@ export default class extends wepy.app {
       'pages/adDetails', // 广告详情
       'pages/shopRecharge', // 广告金充值
       'pages/reserveList', // 广告金明细
-      'pages/index', // 广告页
+      
       
     ],
     window: {

@@ -220,19 +220,19 @@ button::after {
     </view>
     <view class='gong'>
       <view  @tap="goAdvertising" class='selNav'>
-        <icon class="iconfont icon-fenxiang"></icon>
+        <icon class="iconfont icon-guanggao"></icon>
         <view>发布广告</view>
-        <icon class="iconfont icon-fenxiang"></icon>
+        <icon class="iconfont icon-xiangyou"></icon>
       </view>
       <view  @tap="goAdList" class='selNav'>
-        <icon class="iconfont icon-fenxiang"></icon>
+        <icon class="iconfont icon-guanggao"></icon>
         <view>我的广告</view>
-        <icon class="iconfont icon-fenxiang"></icon>
+        <icon class="iconfont icon-xiangyou"></icon>
       </view>
       <view  @tap="reserveList" class='selNav'>
-        <icon class="iconfont icon-fenxiang"></icon>
+        <icon class="iconfont icon-tixianmingxi"></icon>
         <view>广告金明细</view>
-        <icon class="iconfont icon-fenxiang"></icon>
+        <icon class="iconfont icon-xiangyou"></icon>
       </view>
     </view>
     <!--入驻 -->

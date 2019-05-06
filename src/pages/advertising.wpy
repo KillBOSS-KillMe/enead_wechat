@@ -166,8 +166,10 @@ button[type=primary] {
     <view class="appointment">
       <view class="title">
         <view>广告发布,活动发布</view>
-        <view>{{shopInfo.name}}店铺广告创建</view>
-        <view>储蓄金：{{shopInfo.reserve}}</view>
+        <!-- <view>{{shopInfo.name}}店铺广告创建</view> -->
+        <view>{店铺名}店铺广告创建</view>
+        <!-- <view>储蓄金：{{shopInfo.reserve}}</view> -->
+        <view>储蓄金：10:00</view>
       </view>
       <form class="appointment_form" bindsubmit='setAdvertising'>
           <input type="text" placeholder='广告名称' class="appointment_input" name="name" value="{{name}}"/>
