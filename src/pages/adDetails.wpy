@@ -23,6 +23,7 @@
   height: 100rpx;
   line-height: 100rpx;
   background-color: #ff4a00;
+  border-radius: 0;
 }
 
 .title {
@@ -101,6 +102,20 @@
   <view>
     <scroll-view scroll-y class="getMoneyList">
 <!-- getMoneyList -->
+        <view class="winDetail" data-index="{{index}}">
+          <view class="winDetail_img">
+            <image src="{{images}}" class=""/>
+          </view>
+          <view class="winDetail_center">
+            <view>昵称</view>
+            <view class="winDetail_text">领取类别-观看、分享</view>
+          </view>
+          <view class="winDetail_right">
+            <view>金额1.00¥</view>
+            <view>2019.4.30 14:30</view>
+            <view class="winDetail_title"> </view>
+          </view>
+        </view>
       <repeat for="{{getMoneyList}}" key="index" index="index" item="item">
         <view class="winDetail" data-index="{{index}}">
           <view class="winDetail_img">
@@ -122,11 +137,15 @@
       <view class="listMessage" wx:if="{{getMoneyList.length == 0}}">暂无领取纪录</view>
     </scroll-view>
     <!-- 活动主图 -->
-    <image src="{{adImage}}" style="width:{{autoW}}px;height:{{autoH}}px" bindload='autoImage' class="activity {{indexloading}}" />
+    <!-- <image src="{{adImage}}" style="width:{{autoW}}px;height:{{autoH}}px" bindload='autoImage' class="activity {{indexloading}}" /> -->
+    <image src="{{images}}" style="width:{{autoW}}px;height:{{autoH}}px" bindload='autoImage' class="activity {{indexloading}}" />
     <view class="shopInfo">
-      <view class="shopName">{{title}}</view>
+      <view class="shopName">店铺名</view>
+      <view @tap="dialPhone" data-phone="18888888888">电话:18888888888</view>
+      <view>广告余额:10.00￥</view>
+      <!-- <view class="shopName">{{title}}</view>
       <view @tap="dialPhone">电话:{{shopInfo.phone}}</view>
-      <view>广告余额:{{total}}</view>
+      <view>广告余额:{{total}}</view> -->
     </view>
     <view class="buy">
       <!-- <view class="recharge" @tap="setShopCart">充值</view> -->
@@ -152,6 +171,7 @@ export default class Addetails extends wepy.page {
   };
   // alias example
   data = {
+    images: 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1556471365&di=d09f43e91e233b96bdd6a76297de48a9&src=http://b-ssl.duitang.com/uploads/item/201806/03/20180603232440_qwqcn.jpeg',
     autoW: 0,
     autoH: 0,
     adImage: '',
@@ -168,7 +188,10 @@ export default class Addetails extends wepy.page {
   };
 
   methods = {
-
+    dialPhone(e) {
+      // 拨打电话执行
+      this.dialPhoneRun(e)
+    }
   };
   async onLoad(options) {
     this.adImage = options.ad
@@ -180,6 +203,21 @@ export default class Addetails extends wepy.page {
     this.shopInfo = this.$parent.globalData.shopInfo
     this.getAdUserInfo()
   };
+  dialPhoneRun(e) {
+    // 拨打电话执行
+    let phone = e.target.dataset.phone
+    if (phone) {
+      wx.makePhoneCall({
+        phoneNumber: phone,
+        success: function () {
+          console.log('拨打电话成功！')
+        },
+        fail: function () {
+          console.log('拨打电话失败！')
+        }
+      })
+    }
+  }
   async getAdUserInfo() {
     await wepy.login().then(res => {
       this.code = res.code

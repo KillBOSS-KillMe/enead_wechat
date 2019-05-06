@@ -1,0 +1,304 @@
+<style lang="less">
+.title{
+  width: 750rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title view{
+  width: 50%;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title .action{
+  border-bottom: 2px solid #f86e09;
+}
+.winDetail {
+    width: 95%;
+    border: 1px solid #eee;
+    border-radius: 20rpx;
+    height: 160rpx;
+    margin: 20rpx 2.5%;
+    color: #333;
+    box-sizing: border-box;
+    padding: 30rpx 0;
+}
+.winDetail {
+    width: 95%;
+    border: 1px solid #eee;
+    border-radius: 20rpx;
+    height: 160rpx;
+    margin: 20rpx 2.5%;
+    color: #333;
+    box-sizing: border-box;
+    padding: 30rpx 0;
+}
+
+.winDetail_img image {
+    width: 78rpx;
+    height: 78rpx;
+    float: left;
+    margin-left: 20rpx;
+    border-radius: 50%;
+    margin-top: 10rpx;
+}
+
+.winDetail_center {
+    float: left;
+    margin-left: 20rpx;
+    font-size: 40rpx;
+}
+
+.winDetail_center view {
+    width: 300rpx;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+.winDetail_text {
+    font-size: 28rpx;
+    margin-top: 10rpx;
+}
+
+.winDetail_right {
+    float: right;
+    margin-right: 20rpx;
+    text-align: right;
+    font-size: 20rpx;
+    line-height: 35rpx;
+}
+
+.winDetail_title {
+    font-size: 26rpx;
+    color: #ef3f22;
+}
+</style>
+<template>
+  <view>
+    <view class="title">
+      <view class="{{inListDom?'action':''}}" @tap="inList">入账明细</view>
+      <view class="{{outListDom?'action':''}}" @tap="outList">出帐明细</view>
+    </view>
+    <view class="balance {{inListDom?'show':'hide'}}">
+        <view class="winDetail">
+          <view class="winDetail_img">
+            <image src="{{images}}" class=""/>
+          </view>
+          <view class="winDetail_center">
+            <view>店铺名称</view>
+            <view class="winDetail_text">店铺地址</view>
+          </view>
+          <view class="winDetail_right">
+            <view>2019.4.30</view>
+            <view>13::20</view>
+            <view class="winDetail_title">0.01￥</view>
+          </view>
+        </view>
+      <repeat for="{{reserveList}}" key="index" index="index" item="item">
+        <view class="winDetail">
+          <view class="winDetail_img">
+            <image src="{{userInfo.avatarUrl}}" class=""/>
+          </view>
+          <view class="winDetail_center">
+            <view>{{shopInfo.name}}</view>
+            <view class="winDetail_text">{{shopInfo.address}}</view>
+          </view>
+          <view class="winDetail_right">
+            <view>{{item.date}}</view>
+            <view>{{item.time}}</view>
+            <view class="winDetail_title">{{item.in}}</view>
+          </view>
+        </view>
+      </repeat>
+      <!-- <view class="listMessage hide {{prompt?'show':''}}">已无更多数据</view>
+      <view class="listMessage hide {{listShow?'show':''}}">暂无列表数据</view> -->
+    </view>
+    <view class="balance {{outListDom?'show':'hide'}}">
+        <view class="winDetail">
+          <view class="winDetail_img">
+            <image src="{{images}}" class=""/>
+          </view>
+          <view class="winDetail_center">
+            <view>店铺:店铺名称</view>
+            <view class="winDetail_text">广告:广告名称</view>
+          </view>
+          <view class="winDetail_right">
+            <view>2019.4.30</view>
+            <view>13::20</view>
+            <view class="winDetail_title">10:00￥</view>
+          </view>
+        </view>
+      <repeat for="{{reserveList}}" key="index" index="index" item="item">
+        <view class="winDetail">
+          <view class="winDetail_img">
+            <image src="{{userInfo.avatarUrl}}" class=""/>
+          </view>
+          <view class="winDetail_center">
+            <view>店铺:{{shopInfo.name}}</view>
+            <view class="winDetail_text">广告:{{item.ad}}</view>
+          </view>
+          <view class="winDetail_right">
+            <view>{{item.date}}</view>
+            <view>{{item.time}}</view>
+            <view class="winDetail_title">{{item.out}}</view>
+          </view>
+        </view>
+      </repeat>
+      <!-- <view class="listMessage hide {{prompt?'show':''}}">已无更多数据</view>
+      <view class="listMessage hide {{listShow?'show':''}}">暂无列表数据</view> -->
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class ReserveInList extends wepy.page {
+  config = {
+    'navigationBarTitleText': '广告金明细'
+  };
+  // 生命组件ID
+  components = {};
+  // alias example
+  data = {
+    images: 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1556471365&di=d09f43e91e233b96bdd6a76297de48a9&src=http://b-ssl.duitang.com/uploads/item/201806/03/20180603232440_qwqcn.jpeg',
+    shopInfo: null,
+    reserveList: null,
+    userInfo: null,
+    prompt: false,
+    listShow: false,
+    // 入账Dom显示
+    inListDom: true,
+    // 出账Dom显示
+    outListDom: false
+  };
+  methods = {};
+  onLoad() {
+    this.userInfo = this.$parent.globalData.userInfo
+    this.shopInfo = this.$parent.globalData.shopInfo
+    // 默认显示入账明细
+    this.inList()
+  };
+  // 入账明细
+  async inList() {
+    // 入账Dom显示
+    this.inListDom = true
+    // 出账Dom显示
+    this.outListDom = false
+    await wepy.login().then(res => {
+      this.code = res.code
+    })
+    await wx.request({
+      url: `${this.$parent.globalData.requestUrl}/shop/reserve_in_show`,
+      method: 'POST',
+      data: {
+        code: this.code
+      },
+      success: data => {
+        if (data.statusCode === 200) {
+          let reserveList = data.data.data
+          let allTime = ''
+          if (reserveList.length <= 0) {
+            this.listShow = true
+            this.$apply()
+            return
+          }
+          for (let i = 0; i < reserveList.length; i++) {
+            allTime = reserveList[i].created_at
+            allTime = allTime.split(' ')
+            reserveList[i]['date'] = allTime[0]
+            reserveList[i]['time'] = allTime[1]
+          }
+          this.reserveList = reserveList
+          this.$apply()
+          // 获取下一页的请求Id
+          if (data.data.meta.pagination.links) {
+            this.getUrl = data.data.meta.pagination.links.next
+          }
+        }
+      }
+    })
+  }
+  // 出账明细
+  async outList() {
+    // 入账Dom显示
+    this.inListDom = false
+    // 出账Dom显示
+    this.outListDom = true
+    await wepy.login().then(res => {
+      this.code = res.code
+    })
+    await wx.request({
+      url: `${this.$parent.globalData.requestUrl}/shop/reserve_out_show`,
+      method: 'POST',
+      data: {
+        code: this.code
+      },
+      success: data => {
+        if (data.statusCode === 200) {
+          let reserveList = data.data.data
+          let allTime = ''
+          if (reserveList.length <= 0) {
+            this.listShow = true
+            this.$apply()
+            return
+          }
+          for (let i = 0; i < reserveList.length; i++) {
+            allTime = reserveList[i].created_at
+            allTime = allTime.split(' ')
+            reserveList[i]['date'] = allTime[0]
+            reserveList[i]['time'] = allTime[1]
+          }
+          this.reserveList = reserveList
+          this.$apply()
+          // 获取下一页的请求Id
+          if (data.data.meta.pagination.links) {
+            this.getUrl = data.data.meta.pagination.links.next
+          }
+        }
+      }
+    })
+  }
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  async onReachBottom() {
+    if (!this.getUrl) {
+      this.prompt = false
+      this.$apply()
+      return
+    }
+    await wepy.login().then(res => {
+      this.code = res.code
+    })
+    await wx.request({
+      url: this.getUrl,
+      method: 'POST',
+      data: {
+        code: this.code
+      },
+      success: data => {
+        if (data.statusCode === 200) {
+          let reserveList = data.data.data
+          let allTime = ''
+          for (let i = 0; i < reserveList.length; i++) {
+            allTime = reserveList[i].created_at
+            allTime = allTime.split(' ')
+            reserveList[i]['date'] = allTime[0]
+            reserveList[i]['time'] = allTime[1]
+          }
+          // 将新的请求结果加入原有数组  concat连接两个或更多的数组，并返回结果。
+          this.reserveList = this.reserveList.concat(reserveList)
+          this.$apply()
+          // 更新下一页请求地址
+          if (data.data.meta.pagination.links) {
+            this.getUrl = data.data.meta.pagination.links.next
+          }
+        }
+      }
+    })
+  }
+}
+</script>
