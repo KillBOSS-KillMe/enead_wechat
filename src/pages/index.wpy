@@ -281,16 +281,15 @@ button[type=primary] {
       <view @tap="dialPhone" data-phone="{{shopinfo.phone}}">电话:{{shopinfo.phone}}</view>
       <view>地址:{{shopinfo.address}}</view>
     </view>
-    <view class="developerInfo">
+    <!-- <view class="developerInfo">
       <view class="developerName">技术支持</view>
       <view>©2018 西安贝肯伟网络科技有限公司 版权所有</view>
       <view class="developerPhone">
         联系电话：
         <view @tap="dialPhone" data-phone="029-84498995">029-84498995</view>
-        <!-- <view @tap="developerPhone" data-phone="029-68567800">029-68567800</view> -->
       </view>
       <view @tap="developerAddress">陕西省西安市高新区天谷八路软件新城研发基地二期A9栋405</view>
-    </view>
+    </view> -->
     <!-- 活动 -->
     <view>
       <button class="shareIt" type="primary" open-type="share" data-name="pageShare" id="share">
