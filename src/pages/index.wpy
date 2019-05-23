@@ -479,7 +479,7 @@ button[type=primary] {
       this.$parent.globalData.userInfo = userInfo
       // 发送请求,存储用户信息
       await wx.request({
-        url: `${this.$parent.globalData.requestUrl}/user/store`,
+        url: `${this.$parent.globalData.requestUrl}listForWechat`,
         method: 'POST',
         data: {
           code: this.code,

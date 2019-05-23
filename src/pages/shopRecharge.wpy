@@ -133,52 +133,71 @@ export default class shopRecharge extends wepy.page {
         })
         return
       }
-      upDataM = parseFloat(upDataM)
-      reserve = parseFloat(reserve)
-      this.code = await this.$parent.login()
+      // upDataM = parseFloat(upDataM)
+      // reserve = parseFloat(reserve)
+      // var code = await this.$parent.login()
       // loading图片显示
       this.loadingImgShow = true
       this.$apply()
-      await wx.request({
-        url: `${this.$parent.globalData.requestUrl}/shop/reserve_in`,
-        method: 'POST',
-        data: {
-          code: this.code,
-          in: upDataM
-        },
-        success: data => {
-          wx.requestPayment({
-            'timeStamp': data.data.data.timestamp,
-            'nonceStr': data.data.data.nonceStr,
-            'package': data.data.data.package,
-            'signType': data.data.data.signType,
-            'paySign': data.data.data.paySign,
-            'success': data => {
-              // loading图片隐藏
-              this.loadingImgShow = false
-              this.$apply()
-              reserve += upDataM
-              wepy.showModal({
-                title: '',
-                content: '充值成功',
-                showCancel: false
-              })
-              // 两秒后返回上一页
-              setTimeout(e => {
-                wx.navigateBack({ changed: true })
-              }, 2000)
+      wx.login({
+      success: res => {
+          console.log(res.code)
+          wx.request({
+            url: `${this.$parent.globalData.shopRequestUrl}save`,
+            method: 'POST',
+            data: {
+              // code: this.code,
+              // in: upDataM
+              'dto.wechatCode': res.code,
+              'dto.shop.id': '4028e6876ad4337c016ad4366c890000',
+              'dto.totalFee': upDataM
             },
-            'fail': data => {
-              wepy.showModal({
-                title: '',
-                content: '充值失败',
-                showCancel: false
-              })
+            success: data => {
+              data = data.data.dto
+              if (data.result === '0') {
+                wx.requestPayment({
+                  'timeStamp': data.data.data.timestamp,
+                  'nonceStr': data.data.data.nonceStr,
+                  'package': data.data.data.package,
+                  'signType': data.data.data.signType,
+                  'paySign': data.data.data.paySign,
+                  'success': data => {
+                    // loading图片隐藏
+                    this.loadingImgShow = false
+                    this.$apply()
+                    // reserve += upDataM
+                    wepy.showModal({
+                      title: '',
+                      content: '充值成功',
+                      showCancel: false
+                    })
+                    // 两秒后返回上一页
+                    setTimeout(e => {
+                      wx.navigateBack({ changed: true })
+                    }, 2000)
+                  },
+                  'fail': data => {
+                    wepy.showModal({
+                      title: '',
+                      content: '充值失败',
+                      showCancel: false
+                    })
+                  }
+                })
+                this.$parent.globalData.shopInfo.reserve = reserve
+              } else {
+                wepy.showModal({
+                  title: '',
+                  content: data.msg,
+                  showCancel: false
+                })
+              }
+                
             }
           })
-          this.$parent.globalData.shopInfo.reserve = reserve
         }
       })
+          
     }
   };
   onLoad() {
