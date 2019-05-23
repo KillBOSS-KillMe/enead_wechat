@@ -189,14 +189,15 @@ export default class ReserveInList extends wepy.page {
     this.outListDom = false
     this.code = await this.$parent.login()
     await wx.request({
-      url: `${this.$parent.globalData.requestUrl}/shop/reserve_in_show`,
+      url: `${this.$parent.globalData.shopRequestUrl}inDetailFW`,
       method: 'POST',
       data: {
-        code: this.code
+        'dto.shop.openid': this.shopInfo.openid
       },
       success: data => {
-        if (data.statusCode === 200) {
-          let reserveList = data.data.data
+        data = data.data.dto
+        if (data.result === '0') {
+          let reserveList = data.shopReserveInDetails
           let allTime = ''
           if (reserveList.length <= 0) {
             this.listShow = true
@@ -204,7 +205,7 @@ export default class ReserveInList extends wepy.page {
             return
           }
           for (let i = 0; i < reserveList.length; i++) {
-            allTime = reserveList[i].created_at
+            allTime = reserveList[i].createdAt
             allTime = allTime.split(' ')
             reserveList[i]['date'] = allTime[0]
             reserveList[i]['time'] = allTime[1]
@@ -215,6 +216,12 @@ export default class ReserveInList extends wepy.page {
           if (data.data.meta.pagination.links) {
             this.getUrl = data.data.meta.pagination.links.next
           }
+        } else {
+          wepy.showModal({
+            title: '',
+            content: data.msg,
+            showCancel: false
+          })
         }
       }
     })

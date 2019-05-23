@@ -407,6 +407,7 @@ export default class User extends wepy.page {
           'dto.shop.name': name
         },
         success: data => {
+          // data = data.data.dto
           if (this.selected) {
             this.selected = false
           } else {
