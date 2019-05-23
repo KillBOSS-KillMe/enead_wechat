@@ -84,6 +84,7 @@ export default class extends wepy.app {
   globalData = {
     userInfo: null,
     requestUrl: 'https://www.enehis.com/platform/wallet/walletCtrl.htm?BLHMI=',
+    shopRequest: 'https://www.enehis.com/platform/shop/shopCtrl.htm?BLHMI=',
     shopRequestUrl: 'https://www.enehis.com/platform/shopReserveInDetail/shopReserveInDetailCtrl.htm?BLHMI='
   }
 

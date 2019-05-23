@@ -244,8 +244,8 @@ button::after {
             <!-- @tap="goUserInfo" 修改个人信息弹框触发时间事件,暂无此需求,不予调用 -->
             <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover" />
             <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-            <!-- <view class="top_right" @tap="goAdmission">{{hasShopInfo}}</view> -->
-            <view class="top_right" @tap="goAdmission">入驻店铺</view>
+            <view class="top_right" @tap="goAdmission">{{hasShopInfo}}</view>
+            <!-- <view class="top_right" @tap="goAdmission">入驻店铺</view> -->
           <!-- </block> -->
         </view>
       </view>
@@ -353,8 +353,8 @@ export default class User extends wepy.page {
       this.$redirect(url)
     },
     goAdmission() {
-      this.$navigate('/pages/shop')
-      return ''
+      // this.$navigate('/pages/shop')
+      // return ''
       if (this.hasShop) {
         this.$navigate('/pages/shop')
         return
@@ -398,13 +398,13 @@ export default class User extends wepy.page {
       this.code = await this.$parent.login()
       // 发送请求,入驻店铺
       await wx.request({
-        url: `${this.$parent.globalData.requestUrl}/shop/store`,
+        url: `${this.$parent.globalData.shopRequest}save`,
         method: 'POST',
         data: {
-          code: this.code,
-          address: address,
-          phone: phone,
-          name: name
+          'dto.shop.openid': this.userInfo.openid,
+          'dto.shop.address': address,
+          'dto.shop.phone': phone,
+          'dto.shop.name': name
         },
         success: data => {
           if (this.selected) {
