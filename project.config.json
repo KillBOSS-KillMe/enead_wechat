@@ -12,5 +12,7 @@
 	"appid": "wxc5390a62c8d01c15",
 	"projectname": "nenad",
 	"miniprogramRoot": "dist/",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {}
 }
