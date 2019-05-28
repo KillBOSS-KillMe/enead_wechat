@@ -458,16 +458,17 @@ button[type=primary] {
         success: res => {
           wx.request({
             url: `${this.$parent.globalData.requestUrl}userSave`,
-            method: 'POST',
+            method: 'GET',
             data: {
               'dto.wechatCode': res.code,
               'dto.normalUser.nickName': this.userInfo.nickName,
-              'dto.normalUser.sex': this.userInfo.gender,
               'dto.normalUser.avatar': this.userInfo.avatarUrl,
-              'dto.normalUser.province': this.userInfo.province
+              'dto.normalUser.province': this.userInfo.province,
+              'dto.normalUser.sex': this.userInfo.gender
             },
             success: data => {
-              console.log()
+              console.log('---------------------')
+              console.log(data)
             }
           })
         }
