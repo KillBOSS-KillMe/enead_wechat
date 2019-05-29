@@ -187,12 +187,11 @@ export default class ReserveInList extends wepy.page {
     this.inListDom = true
     // 出账Dom显示
     this.outListDom = false
-    this.code = await this.$parent.login()
     await wx.request({
-      url: `${this.$parent.globalData.requestUrl}inDetailFW`,
+      url: `${this.$parent.globalData.requestUrl}shopinDetailFW`,
       method: 'POST',
       data: {
-        'dto.shop.openid': this.shopInfo.openid
+        'dto.openid': this.userInfo.openid
       },
       success: data => {
         data = data.data.dto
