@@ -398,7 +398,7 @@ export default class User extends wepy.page {
       this.code = await this.$parent.login()
       // 发送请求,入驻店铺
       await wx.request({
-        url: `${this.$parent.globalData.shopRequest}save`,
+        url: `${this.$parent.globalData.requestUrl}save`,
         method: 'POST',
         data: {
           'dto.shop.openid': this.userInfo.openid,
