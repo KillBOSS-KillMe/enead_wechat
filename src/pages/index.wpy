@@ -462,16 +462,18 @@ button[type=primary] {
             data: {
               'dto.wechatCode': res.code,
               'dto.normalUser.nickName': this.userInfo.nickName,
-              // 'dto.normalUser.nickName': escape(this.userInfo.nickName),
-              'dto.normalUser.avatar': this.userInfo.avatarUrl,
+              'dto.normalUser.nickName': encodeURI(this.userInfo.nickName),
               'dto.normalUser.province': this.userInfo.province,
               'dto.normalUser.sex': this.userInfo.gender
             },
             success: data => {
               data = this.$parent.null2str(data.data.dto)
               if (data.result === '0') {
-                this.userInfo = data.normalUser
+                // JSON合并
+                this.userInfo = Object.assign({}, data.normalUser, this.userInfo)
                 this.$parent.globalData.userInfo = this.userInfo
+                this.shopInfo = data.shop
+                this.$parent.globalData.shopInfo = this.shopInfo
               } else {
                 wx.showModal({
                   title: '',

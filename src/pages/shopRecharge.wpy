@@ -70,7 +70,7 @@
           </view>
           <view class="reserve">
               当前余额
-              <text class="money_text">{{reserve}}</text>元
+              <text class="money_text">{{shopInfo.balance}}</text>元
           </view>
           <button formType="submit" class="btn">充值</button>
         </form>
@@ -97,8 +97,8 @@ export default class shopRecharge extends wepy.page {
   data = {
     // 请求路径
     requestUrl: '',
-    // 余额
-    reserve: '',
+    shopInfo: {},
+    userInfo: {},
     loadingImgShow: false
   };
   methods = {
@@ -143,29 +143,27 @@ export default class shopRecharge extends wepy.page {
       success: res => {
           console.log(res.code)
           wx.request({
-            url: `${this.$parent.globalData.requestUrl}save`,
-            method: 'POST',
+            url: `${this.$parent.globalData.requestUrl}shopReserveIn`,
+            method: 'GET',
             data: {
-              // code: this.code,
-              // in: upDataM
               'dto.wechatCode': res.code,
-              'dto.shop.id': '4028e6876ad4337c016ad4366c890000',
+              'dto.shop.id': this.shopInfo.id,
               'dto.totalFee': upDataM
             },
             success: data => {
-              data = data.data.dto
+              data = this.$parent.null2str(data.data.dto)
               if (data.result === '0') {
                 wx.requestPayment({
-                  'timeStamp': data.data.data.timestamp,
-                  'nonceStr': data.data.data.nonceStr,
-                  'package': data.data.data.package,
-                  'signType': data.data.data.signType,
-                  'paySign': data.data.data.paySign,
+                  'timeStamp': data.jSONObject.timeStamp,
+                  'nonceStr': data.jSONObject.nonceStr,
+                  'package': data.jSONObject.package,
+                  'signType': data.jSONObject.signType,
+                  'paySign': data.jSONObject.paySign,
                   'success': data => {
                     // loading图片隐藏
                     this.loadingImgShow = false
                     this.$apply()
-                    // reserve += upDataM
+                    this.shopInfo.balance += upDataM
                     wepy.showModal({
                       title: '',
                       content: '充值成功',
@@ -177,6 +175,7 @@ export default class shopRecharge extends wepy.page {
                     }, 2000)
                   },
                   'fail': data => {
+                    console.log(data)
                     wepy.showModal({
                       title: '',
                       content: '充值失败',
@@ -184,7 +183,7 @@ export default class shopRecharge extends wepy.page {
                     })
                   }
                 })
-                this.$parent.globalData.shopInfo.reserve = reserve
+                this.$parent.globalData.shopInfo = this.shopInfo
               } else {
                 wepy.showModal({
                   title: '',
@@ -203,8 +202,9 @@ export default class shopRecharge extends wepy.page {
   onLoad() {
     // 获取接口亲求路径
     this.requestUrl = this.$parent.globalData.requestUrl
-    // 获取余额
-    this.reserve = this.$parent.globalData.shopInfo.reserve
+    // 获取商铺信息
+    this.shopInfo = this.$parent.globalData.shopInfo
+    console.log(this.shopInfo)
     this.$apply()
   };
 }

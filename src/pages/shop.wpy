@@ -212,7 +212,7 @@ button::after {
           </view>
           <view>
             <text class="userinfo-nickname">广告金</text>
-            <text class="userinfo-nickname nickname">{{shopInfo.reserve}}元</text>
+            <text class="userinfo-nickname nickname">{{shopInfo.balance}}元</text>
           </view>
         </view>
         <view class="recharge" @tap="goRecharge">广告金充值</view>
@@ -357,6 +357,10 @@ export default class Shop extends wepy.page {
       })
     }
   };
+  async onShow() {
+    this.userInfo = this.$parent.globalData.userInfo
+    this.shopInfo = this.$parent.globalData.shopInfo
+  };
   // 预约客户
   goShopReservation() {
     this.$navigate('/pages/shopReservation')
@@ -389,27 +393,6 @@ export default class Shop extends wepy.page {
     // 进入商户充值页
     this.$navigate('/pages/shopRecharge')
   };
-  async onShow() {
-    this.userInfo = this.$parent.globalData.userInfo
-    this.$apply()
-    this.code = await this.$parent.login()
-    await wx.request({
-      url: `${this.$parent.globalData.requestUrl}/shop/show`,
-      method: 'POST',
-      data: {
-        code: this.code
-      },
-      success: data => {
-        if (data.statusCode === 200) {
-          let shopInfo = data.data
-          // 保存店铺信息
-          this.shopInfo = shopInfo
-          // 店铺信息存入全局
-          this.$parent.globalData.shopInfo = shopInfo
-        }
-        this.$apply()
-      }
-    })
-  };
+  
 }
 </script>

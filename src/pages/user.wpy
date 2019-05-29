@@ -244,8 +244,8 @@ button::after {
             <!-- @tap="goUserInfo" 修改个人信息弹框触发时间事件,暂无此需求,不予调用 -->
             <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover" />
             <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-            <view class="top_right" @tap="goAdmission">{{hasShopInfo}}</view>
-            <!-- <view class="top_right" @tap="goAdmission">入驻店铺</view> -->
+            <view class="top_right" wx:if="{{this.shopInfo.id != ''}}" @tap="goAdmission">进入店铺</view>
+            <view class="top_right" wx:if="{{this.shopInfo.id == ''}}" @tap="goAdmission">入驻店铺</view>
           <!-- </block> -->
         </view>
       </view>
@@ -346,16 +346,14 @@ export default class User extends wepy.page {
     hasShop: false,
     hongbao: '0.00',
     hongbaoTotal: '0.00',
-    hasShopInfo: ''
+    shopInfo: ''
   };
   methods = {
     goPage(url, evt) {
       this.$redirect(url)
     },
     goAdmission() {
-      // this.$navigate('/pages/shop')
-      // return ''
-      if (this.hasShop) {
+      if (this.shopInfo.id !== '') {
         this.$navigate('/pages/shop')
         return
       }
@@ -398,32 +396,39 @@ export default class User extends wepy.page {
       this.code = await this.$parent.login()
       // 发送请求,入驻店铺
       await wx.request({
-        url: `${this.$parent.globalData.requestUrl}save`,
-        method: 'POST',
+        url: `${this.$parent.globalData.requestUrl}shopSave`,
+        method: 'GET',
         data: {
           'dto.shop.openid': this.userInfo.openid,
-          'dto.shop.address': address,
+          'dto.shop.address': encodeURI(address),
           'dto.shop.phone': phone,
-          'dto.shop.name': name
+          'dto.shop.name': encodeURI(name)
         },
         success: data => {
-          // data = data.data.dto
-          if (this.selected) {
+          data = this.$parent.null2str(data.data.dto)
+          if (data.result === '0') {
+            // 隐藏form框
             this.selected = false
+            this.shopInfo = data.shop
+            console.log(this.shopInfo)
+            this.$parent.globalData.shopInfo = this.shopInfo
+            wepy.showModal({
+              title: '',
+              content: '入驻成功',
+              showCancel: false
+            })
+            this.hasShopInfo = '进入店铺>>'
+            this.$apply()
+            setTimeout(e => {
+              this.$navigate('/pages/shop')
+            }, 2000)
           } else {
-            this.selected = true
+            wx.showModal({
+              title: '',
+              content: data.msg,
+              showCancel: false
+            })
           }
-          wepy.showModal({
-            title: '',
-            content: '入驻成功',
-            showCancel: false
-          })
-          this.hasShopInfo = '进入店铺>>'
-          this.$apply()
-          setTimeout(e => {
-            this.$navigate('/pages/shop')
-          }, 2000)
-          // this.onShow()
         }
       })
     },
@@ -462,30 +467,30 @@ export default class User extends wepy.page {
     // 获取全局变量:用户信息  存入本页
     this.userInfo = this.$parent.globalData.userInfo
     this.$apply()
-    this.code = await this.$parent.login()
-    await wx.request({
-      url: `${this.$parent.globalData.requestUrl}/wallet/show`,
-      method: 'POST',
-      data: {
-        code: this.code
-      },
-      success: data => {
-        // 是否入驻店铺
-        this.hasShop = data.data.has_shop
+    // this.code = await this.$parent.login()
+    // await wx.request({
+    //   url: `${this.$parent.globalData.requestUrl}/wallet/show`,
+    //   method: 'POST',
+    //   data: {
+    //     code: this.code
+    //   },
+    //   success: data => {
+    //     // 是否入驻店铺
+    //     this.hasShop = data.data.has_shop
         if (this.hasShop) {
           this.hasShopInfo = '进入店铺>>'
         } else {
           this.hasShopInfo = '入驻店铺>>'
         }
-        this.$apply()
-        // 现有红包金额
-        this.hongbao = data.data.hongbao
-        this.$parent.globalData.userShopInfo = data.data
-        // 红包总金额
-        this.hongbaoTotal = data.data.hongbao_total
-        this.$apply()
-      }
-    })
+    //     this.$apply()
+    //     // 现有红包金额
+    //     this.hongbao = data.data.hongbao
+    //     this.$parent.globalData.userShopInfo = data.data
+    //     // 红包总金额
+    //     this.hongbaoTotal = data.data.hongbao_total
+    //     this.$apply()
+    //   }
+    // })
   };
   // 提现
   withdraw() {
