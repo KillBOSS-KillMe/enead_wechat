@@ -32,7 +32,7 @@
 .show {
   display: block;
 }
-.hidden {
+.hidden, .hide {
   display: none;
 }
 .listMessage{

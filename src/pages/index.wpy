@@ -441,11 +441,11 @@ button[type=primary] {
         success: res => {
           this.userInfo = res.userInfo
           this.$parent.globalData.userInfo = this.userInfo
-          console.log(this.userInfo)
           this.getUserInfoButShow = false
-          this.setUserInfo(this.userInfo)
-          // // 数据生效
+          // 数据生效
           this.$apply()
+          this.setUserInfo(this.userInfo)
+          
         }
       })
     }
