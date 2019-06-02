@@ -244,8 +244,7 @@ button::after {
             <!-- @tap="goUserInfo" 修改个人信息弹框触发时间事件,暂无此需求,不予调用 -->
             <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover" />
             <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-            <view class="top_right" wx:if="{{this.shopInfo.id != ''}}" @tap="goAdmission">进入店铺</view>
-            <view class="top_right" wx:if="{{this.shopInfo.id == ''}}" @tap="goAdmission">入驻店铺</view>
+            <view class="top_right" @tap="goAdmission">{{shopStr}}</view>
           <!-- </block> -->
         </view>
       </view>
@@ -346,14 +345,15 @@ export default class User extends wepy.page {
     hasShop: false,
     hongbao: '0.00',
     hongbaoTotal: '0.00',
-    shopInfo: ''
+    shopInfo: null,
+    shopStr: ''
   };
   methods = {
     goPage(url, evt) {
       this.$redirect(url)
     },
     goAdmission() {
-      if (this.shopInfo.id !== '') {
+      if (this.shopInfo) {
         this.$navigate('/pages/shop')
         return
       }
@@ -466,31 +466,13 @@ export default class User extends wepy.page {
   async onShow() {
     // 获取全局变量:用户信息  存入本页
     this.userInfo = this.$parent.globalData.userInfo
+    this.shopInfo = this.$parent.globalData.shopInfo
+    if (this.shopInfo) {
+      this.shopStr = '进入店铺'
+    } else {
+      this.shopStr = '入驻店铺'
+    }
     this.$apply()
-    // this.code = await this.$parent.login()
-    // await wx.request({
-    //   url: `${this.$parent.globalData.requestUrl}/wallet/show`,
-    //   method: 'POST',
-    //   data: {
-    //     code: this.code
-    //   },
-    //   success: data => {
-    //     // 是否入驻店铺
-    //     this.hasShop = data.data.has_shop
-        if (this.hasShop) {
-          this.hasShopInfo = '进入店铺>>'
-        } else {
-          this.hasShopInfo = '入驻店铺>>'
-        }
-    //     this.$apply()
-    //     // 现有红包金额
-    //     this.hongbao = data.data.hongbao
-    //     this.$parent.globalData.userShopInfo = data.data
-    //     // 红包总金额
-    //     this.hongbaoTotal = data.data.hongbao_total
-    //     this.$apply()
-    //   }
-    // })
   };
   // 提现
   withdraw() {

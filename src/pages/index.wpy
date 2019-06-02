@@ -472,8 +472,12 @@ button[type=primary] {
                 // JSON合并
                 this.userInfo = Object.assign({}, data.normalUser, this.userInfo)
                 this.$parent.globalData.userInfo = this.userInfo
-                this.shopInfo = data.shop
-                this.$parent.globalData.shopInfo = this.shopInfo
+                if ('shop' in data) {
+                  this.shopInfo = data.shop
+                  this.$parent.globalData.shopInfo = this.shopInfo
+                } else {
+                  this.$parent.globalData.shopInfo = null
+                }
               } else {
                 wx.showModal({
                   title: '',
