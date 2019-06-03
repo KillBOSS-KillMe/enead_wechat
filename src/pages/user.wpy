@@ -316,7 +316,6 @@ button::after {
         </form>
       </view>
     </view>
-    店铺入驻需要提交数据：店铺名，联系电话，地址（地址可不输入）
     <nav @childFn.user="goPage" />
   </view>
 </template>
