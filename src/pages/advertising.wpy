@@ -358,11 +358,12 @@ export default class Advertising extends wepy.page {
       // return ''
       // 发送请求,发布广告
       await wx.uploadFile({
-        url: `${this.$parent.globalData.requestUrl}adverSave`,
+        // https://www.enehis.com/platform/weChat/weChatCtrl.htm?BLHMI=
+        url: `https://www.enehis.com/platform/uploadFileForWe`,
+        // url: `${this.$parent.globalData.requestUrl}adverSave`,
         header: {
           "Content-Type": "multipart/form-data"
         },
-        method: 'GET',
         filePath: newImage,
         name: 'image',
         formData: {
@@ -380,7 +381,7 @@ export default class Advertising extends wepy.page {
           if (data.result === '0') {
             this.$parent.globalData.uuid = ''
             this.title = data.adver.title
-            this.adImage = data.dadverImgUrl
+            this.adImage = data.ad
             // this.uuid = data.adver.openid
             this.promptShow = true
             this.$apply()
@@ -391,11 +392,11 @@ export default class Advertising extends wepy.page {
               showCancel: false
             })
             // 两秒后返回上一页
-            setTimeout(e => {
-              // wx.navigateBack({ changed: true })
-              this.$navigate('/pages/index')
-            }, 2000)
-            return
+            // setTimeout(e => {
+            //   // wx.navigateBack({ changed: true })
+            //   this.$navigate('/pages/index')
+            // }, 2000)
+            // return
           } else {
             wepy.showModal({
               title: '',
