@@ -48,13 +48,25 @@
 }
 
 .btn{
-    background: rgba(0, 0, 0, 0);
-    border: 1px solid #fff;
-    width: 70%;
-    height: 88rpx;
-    margin: 40rpx auto;
-    border-radius: 44rpx;
-    color: #fff;
+  background: rgba(0, 0, 0, 0);
+  border: 1px solid #fff;
+  width: 70%;
+  height: 88rpx;
+  margin: 40rpx auto;
+  border-radius: 44rpx;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loadingImg{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loadingImg image{
+  width: 400rpx;
+  height: 200rpx;
 }
 </style>
 <template>
@@ -76,7 +88,7 @@
         </form>
     </view>
     <view class="loadingImg">
-      <image src="/img/loading.gif" class="hide {{loadingImgShow?'show':''}}" />
+      <image src="/img/loading.gif" wx:if="{{loadingImgShow}}" />
     </view>
   </view>
 </template>

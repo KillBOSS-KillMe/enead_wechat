@@ -139,26 +139,23 @@ button::after {
   color: #fff;
 }
 .appointments {
-  position: absolute;
-  top: 200rpx;
-  left: 12.5%;
+  position: relative;
   background: #7bb312;
   color: #fff;
   border-radius: 40rpx;
   font-size: 24rpx;
-  width: 75%;
+  width: 563rpx;
   height: 700rpx;
   padding: 0 60rpx;
   box-sizing: border-box;
-  z-index: 3;
 }
 .appointments_form {
   color: #fff;
   font-size: 24rpx;
 }
 .appointments_input {
-  border: 4rpx #fff dashed;
-  border-radius: 40rpx;
+  border: 4rpx #ccc solid;
+  border-radius: 10rpx;
   height: 80rpx;
   box-sizing: border-box;
   padding: 0 40rpx;
@@ -166,21 +163,14 @@ button::after {
   color: #fff;
 }
 .appointments_img {
-  position: relative;
-  top: -80rpx;
-  left: 120rpx;
-  width: 230rpx;
-  height: 124rpx;
-}
-.appointments_img1 {
-  position: relative;
-  top: -120rpx;
-  left: 200rpx;
+  position: absolute;
+  top: 0rpx;
+  right: 0rpx;
   width: 60rpx;
   height: 100rpx;
 }
 .titles {
-  margin-top: -50rpx;
+  margin-top: 30rpx;
   font-weight: bold;
   text-align: center;
   font-size: 30rpx;
@@ -236,9 +226,9 @@ button::after {
       </view>
     </view>
     <!--入驻 -->
-    <view class="mask {{selected?'show':'hidden'}}">
+    <view class="mask" wx:if="{{selected}}">
       <view class="appointments">
-        <icon class="iconfont icon-fenxiang appointments_img1" @tap="setShopInfo"></icon>
+        <icon class="iconfont icon-guanbi appointments_img" @tap="setShopInfo"></icon>
         <view class="titles">
             <view>门店信息修改</view>
         </view>
@@ -312,44 +302,44 @@ export default class Shop extends wepy.page {
         })
         return
       }
-      this.code = await this.$parent.login()
-      // 发送请求,入驻店铺
+      // 修改店铺信息
       await wx.request({
-        url: `${this.$parent.globalData.requestUrl}/shop/edit`,
-        method: 'POST',
+        url: `${this.$parent.globalData.requestUrl}shopSave`,
+        method: 'GET',
         data: {
-          code: this.code,
-          address: address,
-          phone: phone,
-          name: name,
-          id: this.shopInfo.id
+          // code: this.code,
+          // address: address,
+          // phone: phone,
+          // name: name,
+          // id: this.shopInfo.id
+          'dto.shop.openid': this.userInfo.openid,
+          'dto.shop.address': encodeURI(address),
+          'dto.shop.phone': phone,
+          'dto.shop.name': encodeURI(name)
         },
         success: data => {
-          if (data.statusCode === 200) {
-            // 隐藏修改店铺信息form表单
-            if (this.selected) {
-              this.selected = false
-            } else {
-              this.selected = true
-            }
+          data = this.$parent.null2str(data.data.dto)
+          console.log(data)
+          if (data.result === '0') {
+            // 隐藏form框
+            this.selected = false
+            this.shopInfo = data.shop
+            console.log(this.shopInfo)
+            this.$parent.globalData.shopInfo = this.shopInfo
             wepy.showModal({
               title: '',
               content: '修改成功',
               showCancel: false
             })
-            // 保存店铺信息
-            this.shopInfo.name = name
-            this.shopInfo.phone = phone
-            this.shopInfo.address = address
-            // 店铺信息存入全局
-            this.$parent.globalData.shopInfo.name = name
-            this.$parent.globalData.shopInfo.phone = phone
-            this.$parent.globalData.shopInfo.address = address
+            this.hasShopInfo = '进入店铺>>'
             this.$apply()
+            setTimeout(e => {
+              this.$navigate('/pages/shop')
+            }, 2000)
           } else {
-            wepy.showModal({
+            wx.showModal({
               title: '',
-              content: '修改失败',
+              content: data.msg,
               showCancel: false
             })
           }

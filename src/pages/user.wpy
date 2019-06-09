@@ -135,26 +135,22 @@ button::after {
   vertical-align: bottom;
 }
 .appointments {
-  position: absolute;
-  top: 200rpx;
-  left: 12.5%;
   background: #7bb312;
   color: #fff;
   border-radius: 40rpx;
   font-size: 24rpx;
-  width: 75%;
+  width: 563rpx;
   height: 700rpx;
   padding: 0 60rpx;
   box-sizing: border-box;
-  z-index: 3;
 }
 .appointments_form {
   color: #fff;
   font-size: 24rpx;
 }
 .appointments_input {
-  border: 4rpx #fff dashed;
-  border-radius: 40rpx;
+  border: 4rpx #ccc solid;
+  border-radius: 10rpx;
   height: 80rpx;
   box-sizing: border-box;
   padding: 0 40rpx;
@@ -162,16 +158,9 @@ button::after {
   color: #fff;
 }
 .appointments_img {
-  position: relative;
-  top: -80rpx;
-  left: 120rpx;
-  width: 230rpx;
-  height: 124rpx;
-}
-.appointments_img1 {
-  position: relative;
-  top: -120rpx;
-  left: 200rpx;
+  position: absolute;
+  top: 0rpx;
+  right: 0rpx;
   width: 60rpx;
   height: 100rpx;
 }
@@ -202,7 +191,7 @@ button::after {
   z-index: 3;
 }
 .titles {
-  margin-top: -50rpx;
+  margin-top: 30rpx;
   font-weight: bold;
   text-align: center;
   font-size: 30rpx;
@@ -212,8 +201,8 @@ button::after {
   font-size: 24rpx;
 }
 .user_input {
-  border: 4rpx #fff dashed;
-  border-radius: 40rpx;
+  border: 4rpx #ccc solid;
+  border-radius: 10rpx;
   height: 80rpx;
   box-sizing: border-box;
   padding: 0 40rpx;
@@ -285,11 +274,9 @@ button::after {
       </button>
     </view>
     <!--入驻 -->
-    <view class="mask {{selected?'show':'hidden'}}">
-      <!-- <view class="mask"> -->
+    <view class="mask" wx:if="{{selected}}">
       <view class="appointments">
-        <image src="/img/join.png" class="appointments_img" />
-        <image src="/img/appointment_close.png" class="appointments_img1" @tap="goAdmission"/>
+        <icon class="iconfont icon-guanbi appointments_img" @tap="goAdmission"></icon>
         <view class="titles">
             <view>门店入驻信息</view>
         </view>

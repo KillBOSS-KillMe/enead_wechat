@@ -1,12 +1,12 @@
 <style lang="less">
 @font-face {
   font-family: 'iconfont';  /* project id 1165734 */
-  src: url('//at.alicdn.com/t/font_1165734_dn0zb8ykexs.eot');
-  src: url('//at.alicdn.com/t/font_1165734_dn0zb8ykexs.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1165734_dn0zb8ykexs.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1165734_dn0zb8ykexs.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1165734_dn0zb8ykexs.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1165734_dn0zb8ykexs.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1165734_8rl036sra8d.eot');
+  src: url('//at.alicdn.com/t/font_1165734_8rl036sra8d.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1165734_8rl036sra8d.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1165734_8rl036sra8d.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1165734_8rl036sra8d.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1165734_8rl036sra8d.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family:"iconfont" !important;
@@ -26,7 +26,8 @@
 .icon-jine:before { content: "\e61e"; } // 钱袋
 .icon-tixianmingxi:before { content: "\e6c2"; } // 提现明细
 .icon-jianyi:before { content: "\e635"; } // 建议
-.icon-xiangyou:before { content: "\e605"; } // 建议
+.icon-xiangyou:before { content: "\e605"; } // 向右
+.icon-guanbi:before { content: "\e649"; } // 关闭
 
 
 .show {
@@ -40,6 +41,16 @@
   line-height: 200rpx;
   color: #888;
   text-align: center
+}
+.mask{
+  position: fixed;
+  top: 0;
+  background-color: rgba(51, 51, 51, .8);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
 
