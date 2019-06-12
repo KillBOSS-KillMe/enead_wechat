@@ -271,15 +271,26 @@ button[type=primary] {
   align-items: center;
   justify-content: center;
 }
+// swiper,swiper-item{
+//   height: auto;
+// }
 </style>
 <template>
   <view>
     <!-- 活动主图 -->
-    <view>
-      <repeat for="{{defaultAd}}" key="index" index="index" item="item">
-        <image src="{{item}}" data-image="{{item}}" @tap="shareQRCodeImg" style="width:{{autoW[index]}}px;height:{{autoH[index]}}px" bindload='autoImage' />
+    
+    <!-- <swiper class='swiper' indicator-dots="true" autoplay='true' interval='5000' duration='2000'>
+      <repeat for="{{defaultAd}}" item="item" key="index" index="index">
+        <swiper-item>
+          <image src="{{item}}" style="width:{{autoW[index]}}px;height:{{autoH[index]}}px" data-index="{{index}}" data-image="{{item}}" bindload='autoImage' @tap="shareQRCodeImg" />
+        </swiper-item>
       </repeat>
-    </view>
+    </swiper> -->
+    <!-- <view> -->
+      <repeat for="{{defaultAd}}" key="index" index="index" item="item">
+        <image src="{{item}}" data-index="{{index}}" data-image="{{item}}" @tap="shareQRCodeImg" style="width:{{autoW[index]}}px;height:{{autoH[index]}}px" bindload='autoImage' />
+      </repeat>
+    <!-- </view> -->
     <view class="shopInfo {{shopinfo.shopName != ''?'show':'hidden'}}">
       <view class="shopName">{{shopInfoShow.shopName}}</view>
       <view @tap="dialPhone" data-phone="{{shopInfoShow.phone}}">电话:{{shopInfoShow.phone}}</view>
@@ -476,8 +487,11 @@ button[type=primary] {
         success: res => {
           autoW = res.windowWidth
           autoH = autoW / imgScale
+          // console.log(autoW,autoH)
           this.autoW[index] = autoW
           this.autoH[index] = autoH
+          console.log(this.autoW)
+          console.log(this.autoH)
           this.$apply()
         }
       })
