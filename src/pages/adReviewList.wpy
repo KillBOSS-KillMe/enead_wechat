@@ -86,9 +86,9 @@
 
 <script>
 import wepy from 'wepy'
-export default class Adlist extends wepy.page {
+export default class AdReviewList extends wepy.page {
   config = {
-    'navigationBarTitleText': '广告列表'
+    'navigationBarTitleText': '审核列表'
   };
   // 生命组件ID
   components = {};
@@ -96,16 +96,18 @@ export default class Adlist extends wepy.page {
   data = {
     shopInfo: null,
     userInfo: null,
-    adList: null,
-    nextUrl: ''
+    adList: null
   };
   methods = {};
   onLoad() {
     this.userInfo = this.$parent.globalData.userInfo
     this.shopInfo = this.$parent.globalData.shopInfo
+    
+  };
+  onShow() {
     // 默认显示入账明细
     this.getAdList()
-  };
+  }
   onUnload() {
     wx.reLaunch({
       url: '/pages/user'
@@ -138,41 +140,11 @@ export default class Adlist extends wepy.page {
   /**
    * 页面上拉触底事件的处理函数
    */
-  async onReachBottom() {
-    if (!this.nextUrl) {
-      return
-    }
-    this.code = await this.$parent.login()
-    await wx.request({
-      url: this.nextUrl,
-      method: 'POST',
-      data: {
-        code: this.code
-      },
-      success: data => {
-        if (data.statusCode === 200) {
-          let adList = data.data.data
-          // 将新的请求结果加入原有数组  concat连接两个或更多的数组，并返回结果。
-          this.adList = this.adList.concat(adList)
-          this.$apply()
-          // 更新下一页请求地址
-          if (data.data.meta.pagination.links) {
-            this.nextUrl = data.data.meta.pagination.links.next
-          }
-        }
-      }
-    })
+  onReachBottom() {
+
   }
   goAdDetails(e) {
-    if (this.adList[e.currentTarget.dataset.index].suggestion) {
-      this.$navigate(`/pages/adDetails?id=${e.currentTarget.dataset.id}`)
-    } else {
-      wepy.showModal({
-        title: '',
-        content: '广告暂未通过审核',
-        showCancel: false
-      })
-    }
+    this.$navigate(`/pages/adReview?id=${e.currentTarget.dataset.id}`)
   }
 }
 </script>

@@ -1,0 +1,318 @@
+<style lang="less">
+.activity{
+  width: 100%;
+}
+.buy{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 100rpx;
+  color: #fff;
+  font-size: 30rpx;
+  text-align: center;
+  display: flex;
+  line-height: 100rpx;
+  z-index: 100;
+}
+.buy .recharge{
+  width: 375rpx;
+  height: 100rpx;
+  background-color: #7bb312;
+}
+.buy .norecharge{
+  width: 375rpx;
+  height: 100rpx;
+  background-color: #ff4a00;
+}
+.buy .shareIt{
+  width: 750rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  background-color: #ff4a00;
+  border-radius: 0;
+}
+
+.title {
+  margin-top: 20rpx;
+  font-weight: bold;
+}
+.shopInfo{
+  height: auto;
+  color: #999;
+  font-size: 30rpx;
+  padding: 30rpx;
+  margin-bottom:100rpx;
+}
+.shopName{
+  font-weight: 700
+}
+.shopInfo view{
+  height: auto;
+  min-height: 50rpx;
+  line-height: 50rpx;
+}
+
+.winDetail {
+    width: 95%;
+    border: 1px solid #eee;
+    border-radius: 20rpx;
+    height: 110rpx;
+    margin: 10rpx 2.5%;
+    color: #333;
+    box-sizing: border-box;
+    padding: 10rpx 0;
+}
+
+.winDetail_img image {
+    width: 78rpx;
+    height: 78rpx;
+    float: left;
+    margin-left: 20rpx;
+    border-radius: 50%;
+    margin-top: 10rpx;
+}
+
+.winDetail_center {
+    float: left;
+    margin-left: 20rpx;
+    font-size: 40rpx;
+}
+
+.winDetail_center view {
+  font-size: 30rpx;
+    width: 300rpx;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+.winDetail_text {
+    font-size: 28rpx;
+    margin-top: 10rpx;
+}
+
+.winDetail_right {
+    float: right;
+    margin-right: 20rpx;
+    text-align: right;
+    font-size: 20rpx;
+    line-height: 35rpx;
+}
+.getMoneyList{
+  width: 100%;
+  max-height: 800rpx;
+  height: auto;
+  border: 1prx solid #000;
+}
+.areas {
+  width: 708rpx;
+  height: 300rox;
+  margin: 20rpx;
+  border: 1rpx solid #ccc;
+  border-radius: 10rpx;
+  margin-bottom: 200rpx;
+}
+</style>
+<template>
+  <view>
+    <scroll-view scroll-y class="getMoneyList">
+      <repeat for="{{getMoneyList}}" key="index" index="index" item="item">
+        <view class="winDetail" data-index="{{index}}">
+          <view class="winDetail_img">
+            <image src="{{item.user.avatar}}" class=""/>
+          </view>
+          <view class="winDetail_center">
+            <view>{{item.user.nick_name}}</view>
+            <view class="winDetail_text">{{title}}</view>
+          </view>
+          <view class="winDetail_right">
+            <view>{{item.in}}¥</view>
+            <view>{{item.created_at}}</view>
+            <view class="winDetail_title"> </view>
+          </view>
+        </view>
+      </repeat>
+    </scroll-view>
+    <!-- 活动主图 -->
+    <!-- <repeat for="{{adInfo.ad}}" key="index" index="index" item="item">
+      <image src="{{item}}" data-index="{{index}}" data-image="{{item}}" @tap="shareQRCodeImg" style="width:{{autoW[index]}}px;height:{{autoH[index]}}px" bindload='autoImage' />
+    </repeat> -->
+    <image src="{{adInfo.ad}}" style="width:{{autoW}}px;height:{{autoH}}px" bindload='autoImage' class="activity {{indexloading}}" />
+    <view class="shopInfo">
+      <view class="shopName">{{adInfo.title}}</view>
+      <view @tap="dialPhone">电话:{{shopInfo.phone}}</view>
+      <view>广告余额:{{adInfo.balance}}</view>
+    </view>
+    <!-- <textarea class="areas" placeholder='输入审核意见' maxlength="9999999" bindinput="inputs"> </textarea> -->
+    <view class="buy">
+      <view class="norecharge" data-type="0" @tap="adverAudit">不通过</view>
+      <view class="recharge" data-type="1" @tap="adverAudit">通过</view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+import check from '../mixins/check'
+// import author from '../components/author' // 授权按钮
+export default class AdReview extends wepy.page {
+  mixins = [check]
+  config = {
+    'navigationBarTitleText': '广告审核'
+  };
+  // 生命组件ID
+  components = {
+    // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    autoW: 0,
+    autoH: 0,
+    adInfo: {},
+    userInfo: null,
+    shopInfo: null
+  };
+
+  methods = {
+    dialPhone(e) {
+      // 拨打电话执行
+      this.dialPhoneRun(e)
+    },
+    // inputs(e) {
+    //   this.suggestion = e.detail.value
+    //   console.log(this.suggestion)
+    // },
+    adverAudit(e) {
+      console.log(e.currentTarget.dataset.type)
+      this.updataAdverAudit(e.currentTarget.dataset.type)
+    }
+  };
+  async onLoad(options) {
+    this.userInfo = this.$parent.globalData.userInfo
+    this.shopInfo = this.$parent.globalData.shopInfo
+    this.getAdUserInfo(options.id)
+  };
+  // 审核提交
+  updataAdverAudit(type) {
+    let suggestion = ''
+    if (type == '1') {
+      suggestion = '审核通过'
+    } else {
+      suggestion = '审核不通过'
+    }
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}adverAudit`,
+      method: 'GET',
+      data: {
+        'dto.adver.id': this.adInfo.id,
+        'dto.adver.state': type,
+        'dto.adver.suggestion': encodeURI(suggestion),
+      },
+      success: data => {
+        data = this.$parent.null2str(data.data.dto)
+        if (data.result === '0') {
+          wepy.showModal({
+            title: '',
+            content: data.msg,
+            showCancel: false
+          })
+          setTimeout(e => {
+            wx.navigateBack({ changed: true })
+          }, 500)
+        } else {
+          wepy.showModal({
+            title: '',
+            content: data.msg,
+            showCancel: false
+          })
+        }
+      }
+    })
+  }
+  dialPhoneRun(e) {
+    // 拨打电话执行
+    let phone = e.target.dataset.phone
+    if (phone) {
+      wx.makePhoneCall({
+        phoneNumber: phone,
+        success: function () {
+          console.log('拨打电话成功！')
+        },
+        fail: function () {
+          console.log('拨打电话失败！')
+        }
+      })
+    }
+  }
+  async getAdUserInfo(id) {
+    await wx.request({
+      url: `${this.$parent.globalData.requestUrl}getAdver`,
+      method: 'GET',
+      data: {
+        'dto.adver.id': id
+      },
+      success: data => {
+        console.log(data)
+        data = this.$parent.null2str(data.data.dto)
+        if (data.result === '0') {
+          // data.adver.ad = [this.adver.ad]
+          this.adInfo = data.adver
+          this.$apply()
+        } else {
+          wepy.showModal({
+            title: '',
+            content: data.msg,
+            showCancel: false
+          })
+        }
+      }
+    })
+  };
+  // 控制背景图大小
+  autoImage(e) {
+    // 获取图片的狂傲
+    var imgW = e.detail.width
+    var imgH = e.detail.height
+    // 计算图片比例
+    var imgScale = imgW / imgH
+    // 声明自适应宽高变量
+    var autoW = ''
+    var autoH = ''
+    // 获取屏幕宽度，并将图片设置为屏幕等宽
+    wx.getSystemInfo({
+      success: res => {
+        autoW = res.windowWidth
+        autoH = autoW / imgScale
+        this.autoW = autoW
+        this.autoH = autoH
+        this.$apply()
+      }
+    })
+  }
+  // autoImage(e) {
+  //   let index = e.target.dataset.index
+  //   // 获取图片的狂傲
+  //   var imgW = e.detail.width
+  //   var imgH = e.detail.height
+  //   // 计算图片比例
+  //   var imgScale = imgW / imgH
+  //   // 声明自适应宽高变量
+  //   var autoW = 0
+  //   var autoH = 0
+  //   // 获取屏幕宽度，并将图片设置为屏幕等宽
+  //   wx.getSystemInfo({
+  //     success: res => {
+  //       autoW = res.windowWidth
+  //       autoH = autoW / imgScale
+  //       // console.log(autoW,autoH)
+  //       this.autoW[index] = autoW
+  //       this.autoH[index] = autoH
+  //       console.log(this.autoW)
+  //       console.log(this.autoH)
+  //       this.$apply()
+  //     }
+  //   })
+  // }
+}
+</script>

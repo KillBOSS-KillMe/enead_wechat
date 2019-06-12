@@ -81,6 +81,8 @@ export default class extends wepy.app {
       'pages/adDetails', // 广告详情
       'pages/shopRecharge', // 广告金充值
       'pages/reserveList', // 广告金明细
+      'pages/adReviewList', // 广告审核列表
+      'pages/adReview', // 广告审核
       
       
     ],

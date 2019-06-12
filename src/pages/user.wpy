@@ -272,6 +272,11 @@ button::after {
         <view>提点建议吧</view>
         <icon class="iconfont icon-xiangyou"></icon>
       </button>
+      <view class='selNav' wx:if="{{shopInfo.isSuper == '1'}}" @tap="adReview">
+        <icon class="iconfont icon-fenxiang"></icon>
+        <view>广告审核</view>
+        <icon class="iconfont icon-xiangyou"></icon>
+      </view>
     </view>
     <!--入驻 -->
     <view class="mask" wx:if="{{selected}}">
@@ -325,18 +330,22 @@ export default class User extends wepy.page {
   data = {
     motto: 'Hello World',
     userInfo: null,
+    shopInfo: null,
     selected: false,
     selected1: false,
     code: null,
     hasShop: false,
     hongbao: '0.00',
     hongbaoTotal: '0.00',
-    shopInfo: null,
+    
     shopStr: ''
   };
   methods = {
     goPage(url, evt) {
       this.$redirect(url)
+    },
+    adReview() {
+      this.$navigate('/pages/adReviewList')
     },
     goAdmission() {
       if (this.shopInfo) {

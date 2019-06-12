@@ -397,6 +397,13 @@ button[type=primary] {
     }
 
     onLoad(options) {
+      this.userInfo = this.$parent.globalData.userInfo
+      this.requestImgUrl = this.$parent.globalData.requestImgUrl
+            
+      // 获取商家信息
+      this.getShopInfo()
+      // 更新用户信息，并获取用户信息
+      this.onGetUserInfo()
       var optionsNode = Object.keys(options);
       if (optionsNode.length > 0) {
         // shopname=${this.shopInfo.name}&phone=${this.shopInfo.phone}&address=${this.shopInfo.address}&id=${this.adInfo.id}&uuid=`
@@ -409,12 +416,7 @@ button[type=primary] {
         }
         this.getAdInfo(options.id)
       }
-      this.userInfo = this.$parent.globalData.userInfo
-      this.requestImgUrl = this.$parent.globalData.requestImgUrl
-      // 获取商家信息
-      this.getShopInfo()
-      // 更新用户信息，并获取用户信息
-      this.onGetUserInfo()
+
     }
     getAdInfo(id) {
       wx.request({
@@ -428,8 +430,51 @@ button[type=primary] {
           if (data.result === '0') {
             this.adInfo = data.adver
             this.defaultAd = [this.adInfo.ad]
+            this.$apply()
+            setTimeout(e => {
+              wx.getSetting({
+                success(res) {
+                  if (res.authSetting['scope.userInfo']) {
+                    // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+                    this.lookAdver(id)
+                  } else {
+                    wepy.showModal({
+                      title: '',
+                      content: '未授权不可领取红包',
+                      showCancel: false
+                    })
+                  }
+                }
+              })
+              
+            }, 5000)
+          } else {
+            wepy.showModal({
+              title: '',
+              content: data.msg,
+              showCancel: false
+            })
+          }
+        }
+      })
+    }
+    lookAdver(id) {
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}getAdver`,
+        method: 'GET',
+        data: {
+          'dto.adver.id': id
+        },
+        success: data => {
+          data = this.$parent.null2str(data.data.dto)
+          if (data.result === '0') {
+            this.adInfo = data.adver
+            this.defaultAd = [this.adInfo.ad]
             console.log(this.adInfo)
             this.$apply()
+            setTimeout(e => {
+              this.lookAdver()
+            }, 5000)
           } else {
             wepy.showModal({
               title: '',

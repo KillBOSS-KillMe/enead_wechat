@@ -391,10 +391,10 @@ export default class Advertising extends wepy.page {
               showCancel: false
             })
             // 两秒后返回上一页
-            // setTimeout(e => {
-            //   // wx.navigateBack({ changed: true })
-            //   this.$navigate('/pages/index')
-            // }, 2000)
+            setTimeout(e => {
+              // wx.navigateBack({ changed: true })
+              this.$navigate('/pages/adList')
+            }, 2000)
             // return
           } else {
             wepy.showModal({
