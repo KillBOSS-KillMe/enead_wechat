@@ -22,30 +22,6 @@
   line-height: 50rpx;
 }
 
-.developerInfo{
-  height: auto;
-  color: #666;
-  font-size: 20rpx;
-  margin-top:300rpx;
-  margin-bottom:130rpx;
-  text-align: center;
-}
-.developerName{
-  font-weight: 700
-}
-.developerInfo view{
-  height: auto;
-  min-height: 40rpx;
-  line-height: 40rpx;
-}
-.developerPhone{
-  display: inline-block;
-}
-.developerPhone view{
-  width: 150rpx;
-  display: inline-block;
-}
-
 .luckDraw {
   width:135rpx;
   height:93rpx;
@@ -296,15 +272,6 @@ button[type=primary] {
       <view @tap="dialPhone" data-phone="{{shopInfoShow.phone}}">电话:{{shopInfoShow.phone}}</view>
       <view>地址:{{shopInfoShow.address}}</view>
     </view>
-    <!-- <view class="developerInfo">
-      <view class="developerName">技术支持</view>
-      <view>©2018 西安贝肯伟网络科技有限公司 版权所有</view>
-      <view class="developerPhone">
-        联系电话：
-        <view @tap="dialPhone" data-phone="029-84498995">029-84498995</view>
-      </view>
-      <view @tap="developerAddress">陕西省西安市高新区天谷八路软件新城研发基地二期A9栋405</view>
-    </view> -->
     <!-- 活动 -->
     <view>
       <button class="shareIt" type="primary" open-type="share" data-name="pageShare" id="share">
@@ -320,7 +287,7 @@ button[type=primary] {
     <!-- <view class="getMoney"> -->
     <view class="getMoney" wx:if="{{titleMoneyImg}}">
       <view class="hideGetMoneyImg"  @tap="hideGetMoneyImg">ⓧ</view>
-      <image src="/img/{{moneyImg}}.png" />
+      <image src="/img/getMoneyBg.png" />
       <view class="infoShow">
         <view class="moneyTitle">恭喜获得红包</view>
         <view class="moneyShow">
@@ -358,17 +325,21 @@ button[type=primary] {
     data = {
       userInfo: {},
       requestImgUrl: '',
-      defaultAd: ['http://www.enuoe.cn/enuoe/ene_h.jpg','http://www.enuoe.cn/enuoe/ene_zs.png'],
+      // defaultAd: ['http://www.enuoe.cn/enuoe/ene_h.jpg','http://www.enuoe.cn/enuoe/ene_zs.png'],
+      defaultAd: ['http://www.enuoe.cn/enuoe/ene.jpg'],
       autoW: [],
       autoH: [],
       shopInfoShow: {
+        "id": "",
         "shopName": "西安一诺尔软件有限公司",
         "phone": "029-85798937",
         "address": "陕西省西安市沣东新城协同创新港研发办公楼A座8层-60号",
       },
       getUserInfoButShow: true,
       adId: '',
-      uuid: ''
+      uuid: '',
+      titleMoneyImg: false,
+      getMoney: ''
     }
 
     computed = {
@@ -393,6 +364,13 @@ button[type=primary] {
       dialPhone(e) {
         // 拨打电话执行
         this.dialPhoneRun(e)
+      },
+      hideGetMoneyImg() {
+        this.titleMoneyImg = false
+        this.$apply()
+      },
+      walletIn() {
+        this.$navigate('/pages/userWalletIn')
       }
     }
 
@@ -406,17 +384,21 @@ button[type=primary] {
       this.onGetUserInfo()
       var optionsNode = Object.keys(options);
       if (optionsNode.length > 0) {
-        // shopname=${this.shopInfo.name}&phone=${this.shopInfo.phone}&address=${this.shopInfo.address}&id=${this.adInfo.id}&uuid=`
         this.adId = options.id
         this.uuid = options.uuid
         this.shopInfoShow = {
+          'id': options.shopid,
           'shopName': options.shopname,
           'phone': options.phone,
           'address': options.address,
         }
-        this.getAdInfo(options.id)
+        if (options.id) {
+          this.getAdInfo(options.id)
+        }
       }
-
+      wx.setNavigationBarTitle({
+        title: this.shopInfoShow.shopName
+      })
     }
     getAdInfo(id) {
       wx.request({
@@ -433,7 +415,7 @@ button[type=primary] {
             this.$apply()
             setTimeout(e => {
               wx.getSetting({
-                success(res) {
+                success: res => {
                   if (res.authSetting['scope.userInfo']) {
                     // 已经授权，可以直接调用 getUserInfo 获取头像昵称
                     this.lookAdver(id)
@@ -460,27 +442,57 @@ button[type=primary] {
     }
     lookAdver(id) {
       wx.request({
-        url: `${this.$parent.globalData.requestUrl}getAdver`,
+        url: `${this.$parent.globalData.requestUrl}lookAdver`,
         method: 'GET',
         data: {
-          'dto.adver.id': id
+          'dto.adver.id': id,
+          'dto.openid': this.userInfo.openid
         },
         success: data => {
+          console.log(data)
           data = this.$parent.null2str(data.data.dto)
           if (data.result === '0') {
-            this.adInfo = data.adver
-            this.defaultAd = [this.adInfo.ad]
-            console.log(this.adInfo)
+            this.getMoney = data.adverBalanceOutDetail.outnum
+            this.titleMoneyImg = true
+            wx.playBackgroundAudio({
+              dataUrl: `https://bkwhb.beaconway.cn/music/gold.mp3`,
+              title: '',
+              coverImgUrl: ''
+            })
             this.$apply()
-            setTimeout(e => {
-              this.lookAdver()
-            }, 5000)
+            if (this.uuid) {
+              this.shareAdver(this.uuid)
+            }
           } else {
             wepy.showModal({
               title: '',
               content: data.msg,
               showCancel: false
             })
+          }
+        }
+      })
+    }
+    shareAdver() {
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}shareAdver`,
+        method: 'GET',
+        data: {
+          'dto.shareAdver.openid': this.shopInfoShow.id,
+          'dto.shareAdver.shopId': this.userInfo.openid,
+          'dto.shareAdver.ad.id': id,
+          'dto.shareAdver.shareOpenid': this.userInfo.openid
+        },
+        success: data => {
+          data = this.$parent.null2str(data.data.dto)
+          if (data.result === '0') {
+            
+          } else {
+            // wepy.showModal({
+            //   title: '',
+            //   content: data.msg,
+            //   showCancel: false
+            // })
           }
         }
       })
@@ -597,12 +609,20 @@ button[type=primary] {
     }
     // 分享页面
     onShareAppMessage(res) {
-      let url = `pages/index?shopname=${this.shopInfo.name}&phone=${this.shopInfo.phone}&address=${this.shopInfo.address}&id=${this.adInfo.id}&uuid=${this.userInfo.openid}`
+      console.log(this.shopInfoShow.id)
+      console.log(this.shopInfoShow.shopName)
+      console.log(this.shopInfoShow.phone)
+      console.log(this.shopInfoShow.address)
+      console.log(this.adId)
+      console.log(this.userInfo.openid)
+      let url = `pages/index?shopname=${this.shopInfoShow.shopName}&phone=${this.shopInfoShow.phone}&address=${this.shopInfoShow.address}&id=${this.adId}&uuid=${this.userInfo.openid}`
+      console.log(url)
       return {
-        title: this.adInfo.title,
+        // this.adInfo.name
+        title: this.shopInfoShow.shopName,
         desc: '',
         // 图片路径
-        imageUrl: this.adInfo.ad,
+        imageUrl: this.defaultAd[0],
         path: url
       }
     };

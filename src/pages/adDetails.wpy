@@ -266,7 +266,9 @@ export default class Addetails extends wepy.page {
   }
   // 分享页面
   onShareAppMessage(res) {
-    let url = `pages/index?shopname=${this.shopInfo.name}&phone=${this.shopInfo.phone}&address=${this.shopInfo.address}&id=${this.adInfo.id}&uuid=`
+    
+    let url = `pages/index?shopid=${this.shopInfo.id}&shopname=${this.shopInfo.name}&phone=${this.shopInfo.phone}&address=${this.shopInfo.address}&id=${this.adInfo.id}&uuid=`
+    console.log(url)
     return {
       title: this.adInfo.title,
       desc: '',

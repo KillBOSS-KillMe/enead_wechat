@@ -63,7 +63,7 @@
   <view>
     <view class="recharge">
       <repeat for="{{adList}}" key="index" index="index" item="item">
-        <view class="winDetail" data-id={{item.id}} data-index="{{index}}" @tap="goAdDetails">
+        <view class="winDetail" data-id={{item.id}} data-index="{{index}}" wx:if="{{item.suggestion == ''}}" @tap="goAdDetails">
           <view class="winDetail_img">
             <image src="{{item.ad}}" class=""/>
           </view>
@@ -120,7 +120,7 @@ export default class AdReviewList extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}shopAdverList`,
       method: 'GET',
       data: {
-        'dto.adver.shopId': this.shopInfo.id
+        // 'dto.adver.shopId': this.shopInfo.id
       },
       success: data => {
         data = this.$parent.null2str(data.data.dto)
