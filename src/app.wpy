@@ -96,9 +96,8 @@ export default class extends wepy.app {
 
   globalData = {
     userInfo: null,
-    requestUrl: 'https://www.enehis.com/platform/weChat/weChatCtrl.htm?BLHMI=',
-    shopRequest: 'https://www.enehis.com/platform/shop/shopCtrl.htm?BLHMI=',
-    shopRequestUrl: 'https://www.enehis.com/platform/shopReserveInDetail/shopReserveInDetailCtrl.htm?BLHMI='
+    imgUrlMain: 'https://bkwhb.beaconway.cn/uploads/images/index_main.jpg',
+    requestUrl: 'https://www.enehis.com/platform/weChat/weChatCtrl.htm?BLHMI='
   }
 
   constructor () {

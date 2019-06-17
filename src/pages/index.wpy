@@ -588,6 +588,7 @@ button[type=primary] {
               if (data.result === '0') {
                 // JSON合并
                 this.userInfo = Object.assign({}, data.normalUser, this.userInfo)
+                this.userInfo = Object.assign({}, data.wallet, this.userInfo)
                 this.$parent.globalData.userInfo = this.userInfo
                 if ('shop' in data) {
                   this.shopInfo = data.shop

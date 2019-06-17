@@ -52,6 +52,7 @@
     border: 1px solid #fff;
     width: 70%;
     height: 88rpx;
+    line-height: 88rpx;
     margin: 40rpx auto;
     border-radius: 44rpx;
     color: #fff;
@@ -74,7 +75,7 @@
           </view>
           <view class="balance">
               当前红包余额
-              <text class="money_text">{{hongbao}}</text>元
+              <text class="money_text">{{userInfo.hongbao}}</text>元
           </view>
           <view class="balance">
               单次提现金额最少为为5元，平台收取10%服务费
@@ -102,8 +103,8 @@ export default class Withdraw extends wepy.page {
     // withdraw: withdraw
   };
   data = {
+    userInfo: {},
     requestUrl: '',
-    hongbao: '',
     arrivalAddress: '微信零钱',
     loadingImg: false
   };
@@ -113,7 +114,7 @@ export default class Withdraw extends wepy.page {
       // 提现金额
       let upDataM = event.detail.value.upDataM
       // 红包余额
-      let hongbao = this.hongbao
+      let hongbao = this.userInfo.hongbao
       if (this.check.isNull(upDataM)) {
         wepy.showModal({
           title: '',
@@ -197,8 +198,7 @@ export default class Withdraw extends wepy.page {
   onLoad() {
     // 获取接口亲求路径
     this.requestUrl = this.$parent.globalData.requestUrl
-    // 获取余额
-    this.hongbao = this.$parent.globalData.userShopInfo.hongbao
+    this.userInfo = this.$parent.globalData.userInfo
     this.$apply()
   };
 }

@@ -247,7 +247,7 @@ button::after {
               红包金额
               <icon class="iconfont icon-jine"></icon>
             </view>
-            <view class="center_top_left" style='color:red;'>{{hongbao}}</view>
+            <view class="center_top_left" style='color:red;'>{{userInfo.hongbao}}</view>
             </view>
             <view class="center_top" style='text-align:center' @tap="withdraw">
               提现
