@@ -471,6 +471,14 @@ export default class User extends wepy.page {
   };
   // 提现
   withdraw() {
+    if (this.userInfo.hongbao < 5) {
+      wepy.showModal({
+        title: '',
+        content: '红包金额低于5元不可提现',
+        showCancel: false
+      })
+      return ''
+    }
     this.$navigate('/pages/withdraw')
   };
   // 钱包入账明细
