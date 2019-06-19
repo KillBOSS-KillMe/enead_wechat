@@ -1,11 +1,54 @@
 <style lang="less">
-
+page{
+  background-color: #f77906;
+}
+.list{
+  width: 690rpx;
+  height: auto;
+  padding: 30rpx;
+  
+  color: #fff;
+  font-size: 28rpx;
+  .item{
+    height: auto;
+    display: flex;
+    // align-items: center;
+    justify-content: center;
+    margin-top: 40rpx;
+    .index{
+      width: 40rpx;
+      height: 40rpx;
+      background-color: #fff;
+      border-radius: 40rpx;
+      color: #f77906;
+      font-size: 28rpx;
+      margin-right: 20rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 8rpx;
+    }
+    .con{
+      width: 630rpx;
+      height: auto;
+      line-height: 50rpx;
+    }
+  }
+  
+}
 </style>
 
 <template>
   <view>
-    平台使用说明
     <image src="{{image}}" style="width:{{autoW}}px;height:{{autoH}}px" bindload='autoImage' />
+    <view class="list">
+      <repeat for="{{listData}}" key="index" index="index" item="item">
+        <view class="item">
+          <view class="index">{{index + 1}}</view>
+          <view class="con">{{item.name}}</view>
+        </view>
+    </repeat>
+    </view>
   </view>
 </template>
 
@@ -17,9 +60,10 @@ export default class Description extends wepy.page {
   };
   // alias example
   data = {
-    image: '',
+    image: '/img/index_main.jpg',
     autoW: 0,
-    autoH: 0
+    autoH: 0,
+    listData: []
   };
   methods = {
     // 控制背景图大小
@@ -45,7 +89,15 @@ export default class Description extends wepy.page {
     }
   }
   onLoad(options) {
-    this.image = this.$parent.globalData.imgUrlMain
+    // this.image = this.$parent.globalData.imgUrlMain
+    
+    this.listData = [
+      {"name":"通过微信小程序分享群和好友裂变功能，快速传播小程序内广告"},
+      {"name":"本平台的游客或店主都可以分享广告至好友，好友观看广告获取红包，同时分享广告红包的人获得等额的红包奖励。"},
+      {"name":"创建广告红包只需要在店铺入驻后，准备发布广告的红包金额及广告资源，即可在店铺主页选择发布广告即可创建广告。"},
+      {"name":"看到广告的每个人都可以领取一定额度的红包，每个广告限定每人领取一次。领取的红包可提现到微信零钱。"},
+      {"name":"店主发布广告需要储蓄金，储蓄金只可用户广告发布。"},
+    ]
     this.$apply()
   };
   
