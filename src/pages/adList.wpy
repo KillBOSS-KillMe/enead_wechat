@@ -78,7 +78,7 @@
           </view>
         </view>
       </repeat>
-      <view class="listMessage" wx:if="{{nextUrl == ''}}">已无更多数据</view>
+      <!-- <view class="listMessage" wx:if="{{nextUrl == ''}}">已无更多数据</view> -->
       <view class="listMessage" wx:if="{{adList.length == 0}}">暂无列表数据</view>
     </view>
   </view>

@@ -167,6 +167,19 @@ button[type=primary] {
   background-color:rgba(255, 255, 255, 0);
   color: #fff;
 }
+#getRedEnvelope{
+  position: fixed;
+  left: 225rpx;
+  bottom: 300rpx;
+  background-color: #FF3300;
+  width: 300rpx;
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+  border-radius: 80rpx;
+  color: #fff;
+  font-size: 28rpx;
+}
 .activity{
   width: 100%;
 }
@@ -303,6 +316,7 @@ button[type=primary] {
       </view>
     </view>
     <view>
+      <button open-type="getUserInfo" wx:if='{{getgetRedEnvelopeStr}}' id='getRedEnvelope' lang="zh_CN" @getuserinfo="onGetUserInfo">领取红包</button>
       <button open-type="getUserInfo" wx:if='{{getUserInfoButShow}}' id='getUserInfo' lang="zh_CN" @getuserinfo="onGetUserInfo"></button>
     </view>
     <nav @childFn.user="goPage" />
@@ -339,7 +353,8 @@ button[type=primary] {
       adId: '',
       uuid: '',
       titleMoneyImg: false,
-      getMoney: ''
+      getMoney: '',
+      getgetRedEnvelopeStr: false
     }
 
     computed = {
@@ -420,11 +435,14 @@ button[type=primary] {
                     // 已经授权，可以直接调用 getUserInfo 获取头像昵称
                     this.lookAdver(id)
                   } else {
-                    wepy.showModal({
-                      title: '',
-                      content: '未授权不可领取红包',
-                      showCancel: false
-                    })
+                    // 显示领取红包按钮
+                    this.getgetRedEnvelopeStr = true
+                    this.$apply()
+                    // wepy.showModal({
+                    //   title: '',
+                    //   content: '未授权不可领取红包',
+                    //   showCancel: false
+                    // })
                   }
                 }
               })
@@ -586,6 +604,14 @@ button[type=primary] {
             success: data => {
               data = this.$parent.null2str(data.data.dto)
               if (data.result === '0') {
+                if (this.getgetRedEnvelopeStr) {
+                  // 初始未授权，授权成功后领取红包
+                  // 领取红包
+                  this.getgetRedEnvelopeStr = false
+                  this.$apply()
+                  this.lookAdver(this.adId)
+                }
+                
                 // JSON合并
                 this.userInfo = Object.assign({}, data.normalUser, this.userInfo)
                 this.userInfo = Object.assign({}, data.wallet, this.userInfo)

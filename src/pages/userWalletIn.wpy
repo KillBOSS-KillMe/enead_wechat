@@ -73,8 +73,8 @@
         </view>
       </view>
     </repeat>
-    <view class="listMessage hide {{prompt?'show':''}}">已无更多数据</view>
-    <view class="listMessage hide {{listShow?'show':''}}">暂无列表数据</view>
+    <!-- <view class="listMessage {{prompt?'hide':'show'}}">已无更多数据</view> -->
+    <view class="listMessage {{reserveList.length > 0?'hide':'show'}}">暂无列表数据</view>
   </view>
 </template>
 

@@ -14,7 +14,7 @@
   justify-content: center;
 }
 .title .action{
-  border-bottom: 2px solid #f86e09;
+  border-bottom: 2px solid #7bb312;
 }
 .winDetail {
     width: 95%;
@@ -99,8 +99,8 @@
           </view>
         </view>
       </repeat>
-      <view class="listMessage hide {{prompt?'show':''}}">已无更多数据</view>
-      <view class="listMessage hide {{listShow?'show':''}}">暂无列表数据</view>
+      <!-- <view class="listMessage {{prompt?'hide':'show'}}">已无更多数据</view> -->
+      <view class="listMessage {{shopinDetailFWList.length > 0?'hide':'show'}}">暂无列表数据</view>
     </view>
     <view class="balance {{outListDom?'show':'hide'}}">
       <repeat for="{{shopoutDetailFWList}}" key="index" index="index" item="item">
@@ -120,8 +120,8 @@
           </view>
         </view>
       </repeat>
-      <view class="listMessage hide {{prompt?'show':''}}">已无更多数据</view>
-      <view class="listMessage hide {{listShow?'show':''}}">暂无列表数据</view>
+      <!-- <view class="listMessage {{prompt?'hide':'show'}}">已无更多数据</view> -->
+      <view class="listMessage {{shopoutDetailFWList.length > 0?'hide':'show'}}">暂无列表数据</view>
     </view>
   </view>
 </template>
