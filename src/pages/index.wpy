@@ -467,7 +467,6 @@ button[type=primary] {
           'dto.openid': this.userInfo.openid
         },
         success: data => {
-          console.log(data)
           data = this.$parent.null2str(data.data.dto)
           if (data.result === '0') {
             this.getMoney = data.adverBalanceOutDetail.outnum
@@ -562,11 +561,8 @@ button[type=primary] {
         success: res => {
           autoW = res.windowWidth
           autoH = autoW / imgScale
-          // console.log(autoW,autoH)
           this.autoW[index] = autoW
           this.autoH[index] = autoH
-          console.log(this.autoW)
-          console.log(this.autoH)
           this.$apply()
         }
       })
@@ -636,14 +632,13 @@ button[type=primary] {
     }
     // 分享页面
     onShareAppMessage(res) {
-      console.log(this.shopInfoShow.id)
-      console.log(this.shopInfoShow.shopName)
-      console.log(this.shopInfoShow.phone)
-      console.log(this.shopInfoShow.address)
-      console.log(this.adId)
-      console.log(this.userInfo.openid)
+      // console.log(this.shopInfoShow.id)
+      // console.log(this.shopInfoShow.shopName)
+      // console.log(this.shopInfoShow.phone)
+      // console.log(this.shopInfoShow.address)
+      // console.log(this.adId)
+      // console.log(this.userInfo.openid)
       let url = `pages/index?shopname=${this.shopInfoShow.shopName}&phone=${this.shopInfoShow.phone}&address=${this.shopInfoShow.address}&id=${this.adId}&uuid=${this.userInfo.openid}`
-      console.log(url)
       return {
         // this.adInfo.name
         title: this.shopInfoShow.shopName,
