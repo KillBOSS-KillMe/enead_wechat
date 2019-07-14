@@ -122,7 +122,9 @@
       <view class="listMessage" wx:if="{{getMoneyList.length == 0}}">暂无领取纪录</view>
     </scroll-view>
     <!-- 活动主图 -->
-    <image src="{{adInfo.ad}}" style="width:{{autoW}}px;height:{{autoH}}px" bindload='autoImage' class="activity {{indexloading}}" />
+    <repeat for="{{adInfo.ad}}" key="index" index="index" item="item">
+      <image src="{{item}}" style="width:{{autoW[index]}}px;height:{{autoH[index]}}px" data-index="index" bindload='autoImage' class="activity {{indexloading}}" />
+    </repeat>
     <view class="shopInfo">
       <view class="shopName">{{adInfo.title}}</view>
       <view @tap="dialPhone">电话:{{shopInfo.phone}}</view>
@@ -152,8 +154,8 @@ export default class Addetails extends wepy.page {
   };
   // alias example
   data = {
-    autoW: 0,
-    autoH: 0,
+    autoW: [],
+    autoH: [],
     adInfo: {},
     userInfo: null,
     shopInfo: null
@@ -197,7 +199,10 @@ export default class Addetails extends wepy.page {
         console.log(data)
         data = this.$parent.null2str(data.data.dto)
         if (data.result === '0') {
-          this.adInfo = data.adver
+          // this.adInfo = data.adver
+          let adInfo = data.adver
+          adInfo.ad = adInfo.ad.split('|')
+          this.adInfo = adInfo
           console.log(this.adInfo)
           this.$apply()
         } else {
@@ -240,21 +245,24 @@ export default class Addetails extends wepy.page {
   }
   // 控制背景图大小
   autoImage(e) {
+    let index = e.target.dataset.index
     // 获取图片的狂傲
     var imgW = e.detail.width
     var imgH = e.detail.height
     // 计算图片比例
     var imgScale = imgW / imgH
     // 声明自适应宽高变量
-    var autoW = ''
-    var autoH = ''
+    var autoW = 0
+    var autoH = 0
     // 获取屏幕宽度，并将图片设置为屏幕等宽
     wx.getSystemInfo({
       success: res => {
         autoW = res.windowWidth
         autoH = autoW / imgScale
-        this.autoW = autoW
-        this.autoH = autoH
+        this.autoW[index] = autoW
+        this.autoH[index] = autoH
+        console.log(this.autoW)
+        console.log(this.autoH)
         this.$apply()
       }
     })

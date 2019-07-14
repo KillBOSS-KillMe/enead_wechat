@@ -397,6 +397,7 @@ button[type=primary] {
       this.getShopInfo()
       // 更新用户信息，并获取用户信息
       this.onGetUserInfo()
+      // this.getAdInfo('2c9080cc6be3ee8d016bf116ea190002')
       var optionsNode = Object.keys(options);
       if (optionsNode.length > 0) {
         this.adId = options.id
@@ -426,7 +427,8 @@ button[type=primary] {
           data = this.$parent.null2str(data.data.dto)
           if (data.result === '0') {
             this.adInfo = data.adver
-            this.defaultAd = [this.adInfo.ad]
+            this.defaultAd = [this.adInfo.ad.split('|')]
+            console.log(this.defaultAd)
             this.$apply()
             setTimeout(e => {
               wx.getSetting({

@@ -123,8 +123,6 @@ export default class Adlist extends wepy.page {
       success: data => {
         data = this.$parent.null2str(data.data.dto)
         if (data.result === '0') {
-
-          // this.adList = data.advers.reverse()
           let adList = data.advers.reverse()
           let i = 0
           for (i in adList) {
