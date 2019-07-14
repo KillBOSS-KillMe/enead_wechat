@@ -65,7 +65,7 @@
       <repeat for="{{adList}}" key="index" index="index" item="item">
         <view class="winDetail" data-id={{item.id}} data-index="{{index}}" @tap="goAdDetails">
           <view class="winDetail_img">
-            <image src="{{item.ad}}" class=""/>
+            <image src="{{item.ad[0]}}" class=""/>
           </view>
           <view class="winDetail_center">
             <view>广告:{{item.title}}</view>
@@ -123,7 +123,15 @@ export default class Adlist extends wepy.page {
       success: data => {
         data = this.$parent.null2str(data.data.dto)
         if (data.result === '0') {
-          this.adList = data.advers.reverse()
+
+          // this.adList = data.advers.reverse()
+          let adList = data.advers.reverse()
+          let i = 0
+          for (i in adList) {
+            let ad = adList[i].ad
+            adList[i].ad = ad.split('|')
+          }
+          this.adList = adList
           this.$apply()
         } else {
           wepy.showModal({
