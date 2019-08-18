@@ -281,6 +281,7 @@ button[type=primary] {
       </repeat>
     <!-- </view> -->
     <view class="shopInfo {{shopinfo.shopName != ''?'show':'hidden'}}">
+      <view>广告描述:{{adInfo.descAd}}</view>
       <view class="shopName">{{shopInfoShow.shopName}}</view>
       <view @tap="dialPhone" data-phone="{{shopInfoShow.phone}}">电话:{{shopInfoShow.phone}}</view>
       <view>地址:{{shopInfoShow.address}}</view>
@@ -340,7 +341,7 @@ button[type=primary] {
       userInfo: {},
       requestImgUrl: '',
       // defaultAd: ['http://www.enuoe.cn/enuoe/ene_h.jpg','http://www.enuoe.cn/enuoe/ene_zs.png'],
-      defaultAd: ['http://www.enuoe.cn/enuoe/ene.jpg'],
+      defaultAd: ['https://www.enuoe.cn/enuoe/ene.jpg'],
       autoW: [],
       autoH: [],
       shopInfoShow: {

@@ -1,12 +1,33 @@
+// 水平垂直居中
+// display: flex;
+// align-items: center;
+// justify-content: center;
+
+// 居右
+// flex-direction:row;
+// justify-content:flex-end
+
+// vertical-align:middle;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+
+// 自动换行
+// word-break:break-all;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
 <style lang="less">
 @font-face {
   font-family: 'iconfont';  /* project id 1165734 */
-  src: url('//at.alicdn.com/t/font_1165734_8rl036sra8d.eot');
-  src: url('//at.alicdn.com/t/font_1165734_8rl036sra8d.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1165734_8rl036sra8d.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1165734_8rl036sra8d.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1165734_8rl036sra8d.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1165734_8rl036sra8d.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1165734_l5n86by75a.eot');
+  src: url('//at.alicdn.com/t/font_1165734_l5n86by75a.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1165734_l5n86by75a.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1165734_l5n86by75a.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1165734_l5n86by75a.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1165734_l5n86by75a.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family:"iconfont" !important;

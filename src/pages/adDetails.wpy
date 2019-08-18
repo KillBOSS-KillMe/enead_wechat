@@ -1,5 +1,6 @@
 <style lang="less">
 .activity{
+  display: block;
   width: 100%;
 }
 .buy{
@@ -123,9 +124,10 @@
     </scroll-view>
     <!-- 活动主图 -->
     <repeat for="{{adInfo.ad}}" key="index" index="index" item="item">
-      <image src="{{item}}" style="width:{{autoW[index]}}px;height:{{autoH[index]}}px" data-index="index" bindload='autoImage' class="activity {{indexloading}}" />
+      <image src="{{item}}" style="width:{{autoW[index]}}px;height:{{autoH[index]}}px" data-index="{{index}}" bindload='autoImage' class="activity {{indexloading}}" />
     </repeat>
     <view class="shopInfo">
+      <view>广告描述:{{adInfo.descAd}}</view>
       <view class="shopName">{{adInfo.title}}</view>
       <view @tap="dialPhone">电话:{{shopInfo.phone}}</view>
       <view>广告余额:{{adInfo.balance}}</view>
@@ -254,15 +256,17 @@ export default class Addetails extends wepy.page {
     // 声明自适应宽高变量
     var autoW = 0
     var autoH = 0
+    
     // 获取屏幕宽度，并将图片设置为屏幕等宽
     wx.getSystemInfo({
       success: res => {
         autoW = res.windowWidth
         autoH = autoW / imgScale
+        // console.log(autoW, autoH, index)
         this.autoW[index] = autoW
         this.autoH[index] = autoH
-        console.log(this.autoW)
-        console.log(this.autoH)
+        // console.log(this.autoW)
+        // console.log(this.autoH)
         this.$apply()
       }
     })

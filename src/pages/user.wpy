@@ -1,35 +1,4 @@
 <style lang="less">
-// #7bb312
-.users {
-  border: 2rpx solid gainsboro;
-  width: 95%;
-  height: 350rpx;
-  position: relative;
-  top: 20rpx;
-  left: 2.5%;
-  background-color: #fff;
-  border-radius: 20rpx;
-  background: #7bb312;
-}
-.top_border {
-  border: 1px solid #fff;
-  width: 98%;
-  margin: 10rpx 1%;
-  border-radius: 20rpx;
-  height: 330rpx;
-}
-.userinfo {
-  margin-top: 100rpx;
-  margin-left: 50rpx;
-  color: #fff;
-  font-size: 30rpx;
-}
-.userinfo-avatar {
-  width: 158rpx;
-  height: 158rpx;
-  float: left;
-  border-radius: 50%;
-}
 .userinfo-nickname {
   float: left;
   margin-left: 40rpx;
@@ -176,90 +145,96 @@ button::after {
   line-height: 120rpx;
   font-weight: bold;
 }
-.user {
-  position: absolute;
-  top: 250rpx;
-  left: 12.5%;
-  background: #7bb312;
-  color: #fff;
-  border-radius: 40rpx;
-  font-size: 24rpx;
-  width: 75%;
-  height: 600rpx;
-  padding: 0 60rpx;
-  box-sizing: border-box;
-  z-index: 3;
+
+
+
+
+// =================================================
+.user{
+  width: 690rpx;
+  height: auto;
+  padding: 30rpx;
+  display: flex;
+  // align-items: center;
+  justify-content: space-between;
+  .userAvatar{
+    width: 180rpx;
+    height: 180rpx;
+    border-radius: 180rpx;
+    border: 10rpx solid #ddd;
+  }
+  .userInfo{
+    width: 450rpx;
+    height: auto;
+    .name{
+      font-size: 40rpx;
+      font-weight: 600;
+      color: #333;
+    }
+    .shop{
+      font-size: 25rpx;
+      color: #999;
+      padding: 15rpx 0;
+    }
+    .operating{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #999;
+      font-size: 30rpx;
+      .item{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+      }
+      icon{
+        font-size: 40rpx;
+        color: #7bb312;
+      }
+    }
+  }
 }
-.titles {
-  margin-top: 30rpx;
-  font-weight: bold;
-  text-align: center;
-  font-size: 30rpx;
-}
-.user_form {
-  color: #fff;
-  font-size: 24rpx;
-}
-.user_input {
-  border: 4rpx #ccc solid;
-  border-radius: 10rpx;
-  height: 80rpx;
-  box-sizing: border-box;
-  padding: 0 40rpx;
-  margin: 50rpx 0;
-  color: #fff;
-}
-.user_img {
-  position: relative;
-  top: -70rpx;
-  left: 60rpx;
-  width: 300rpx;
-  height: 124rpx;
-}
-.user_img1 {
-  position: relative;
-  top: -120rpx;
-  left: 120rpx;
-  width: 60rpx;
-  height: 100rpx;
+.adImg{
+  width: 690rpx;
+  height: auto;
+  padding: 30rpx;
+  background-color: #eee;
+  .bg{
+    width: 690rpx;
+    height: 300rpx;
+    border-radius: 20rpx;
+  }
 }
 </style>
 <template>
   <view>
-    <view class='users'>
-      <view class="top_border">
-        <view class="userinfo">
-          <!-- <block> -->
-            <!-- @tap="goUserInfo" 修改个人信息弹框触发时间事件,暂无此需求,不予调用 -->
-            <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover" />
-            <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-            <view class="top_right" @tap="goAdmission">{{shopStr}}</view>
-          <!-- </block> -->
-        </view>
-      </view>
-    </view>
-    <!-- 中间 -->
-    <view>
-      <view class="main_center">
-        <view class="center">
-          <view class="center_top">
-            <view class="center_top_left">
-              红包金额
-              <icon class="iconfont icon-jine"></icon>
-            </view>
-            <view class="center_top_left" style='color:red;'>{{userInfo.hongbao}}</view>
-            </view>
-            <view class="center_top" style='text-align:center' @tap="withdraw">
-              提现
-              <icon class="iconfont icon-tixian"></icon>
-            </view>
-            <view class="center_rignt" @tap="withdrawList">
-              提现明细
-              <icon class="iconfont icon-tixianmingxi"></icon>
+    <view class="user">
+      <image class="userAvatar" src="{{userInfo.avatarUrl}}" mode="cover" />
+      <view class="userInfo">
+        <!-- @tap="goUserInfo" 修改个人信息弹框触发时间事件,暂无此需求,不予调用 -->
+        <view class="name" @tap="goAdmission">{{userInfo.nickName}}</view>
+        <view class="shop" @tap="goAdmission">{{shopStr}}</view>
+        <view class="operating">
+          <view class="item">
+            <icon class="iconfont icon-jine"></icon>
+            <text>余额{{userInfo.hongbao}}</text>
+          </view>
+          <view class="item" @tap="withdraw">
+            <icon class="iconfont icon-tixian"></icon>
+            <text>提现</text>
+          </view>
+          <view class="item"  @tap="withdrawList">
+            <icon class="iconfont icon-tixianmingxi"></icon>
+            <text>明细</text>
           </view>
         </view>
       </view>
-   </view>
+    </view>
+    <view class="adImg">
+      <image class="bg" src="/img/userBg.jpg" />
+      <!-- <image src="/img/getMoneyBg.png" /> -->
+    </view>
     <!-- 下 -->
     <view class='gong'>
       <view class='selNav' @tap="walletIn">
