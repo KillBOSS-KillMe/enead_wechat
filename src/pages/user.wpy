@@ -200,7 +200,13 @@ button::after {
   height: auto;
   padding: 30rpx;
   background-color: #eee;
+  position: relative;
   .bg{
+    width: 690rpx;
+    height: 300rpx;
+    border-radius: 20rpx;
+  }
+  .adImg{
     width: 690rpx;
     height: 300rpx;
     border-radius: 20rpx;
@@ -233,6 +239,7 @@ button::after {
     </view>
     <view class="adImg">
       <image class="bg" src="/img/userBg.jpg" />
+      <!-- <view class="info">12312312312</view> -->
       <!-- <image src="/img/getMoneyBg.png" /> -->
     </view>
     <!-- 下 -->

@@ -189,10 +189,75 @@ button::after {
   top: 189rpx;
 }
   
+
+
+
+.user{
+  width: 690rpx;
+  height: auto;
+  padding: 30rpx;
+  display: flex;
+  // align-items: center;
+  justify-content: space-between;
+  .userAvatar{
+    width: 180rpx;
+    height: 180rpx;
+    border-radius: 180rpx;
+    border: 10rpx solid #ddd;
+  }
+  .userInfo{
+    width: 450rpx;
+    height: auto;
+    .name{
+      font-size: 40rpx;
+      font-weight: 600;
+      color: #333;
+    }
+    .shop{
+      font-size: 25rpx;
+      color: #999;
+      padding: 15rpx 0;
+    }
+    .operating{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #999;
+      font-size: 30rpx;
+      .item{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+      }
+      icon{
+        font-size: 40rpx;
+        color: #7bb312;
+      }
+    }
+  }
+}
+.adImg{
+  width: 690rpx;
+  height: auto;
+  padding: 30rpx;
+  background-color: #eee;
+  position: relative;
+  .bg{
+    width: 690rpx;
+    height: 300rpx;
+    border-radius: 20rpx;
+  }
+  .adImg{
+    width: 690rpx;
+    height: 300rpx;
+    border-radius: 20rpx;
+  }
+}
 </style>
 <template>
   <view>
-    <view class='users'>
+    <!-- <view class='users'>
       <view hover-class='none' class="top_border">
         <view class="userinfo">
           <image @tap="setShopInfo" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover" />
@@ -207,13 +272,40 @@ button::after {
         </view>
         <view class="recharge" @tap="goRecharge">广告金充值</view>
       </view>
+    </view> -->
+    <view class="user">
+      <image @tap="setShopInfo" class="userAvatar" src="{{userInfo.avatarUrl}}" mode="cover" />
+      <view class="userInfo">
+        <!-- @tap="goUserInfo" 修改个人信息弹框触发时间事件,暂无此需求,不予调用 -->
+        <view class="name">{{shopInfo.name}}</view>
+        <view class="shop">店铺名称</view>
+        <view class="operating">
+          <view class="item">
+            <icon class="iconfont icon-jine"></icon>
+            <text>余额{{shopInfo.balance}}</text>
+          </view>
+          <view class="item" @tap="goRecharge">
+            <icon class="iconfont icon-tixian"></icon>
+            <text>充值</text>
+          </view>
+          <view class="item"  @tap="goAdvertising">
+            <icon class="iconfont icon-tixianmingxi"></icon>
+            <text>发布广告</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="adImg">
+      <image class="bg" src="/img/userBg.jpg" />
+      <!-- <view class="info">12312312312</view> -->
+      <!-- <image src="/img/getMoneyBg.png" /> -->
     </view>
     <view class='gong'>
-      <view  @tap="goAdvertising" class='selNav'>
+      <!-- <view  @tap="goAdvertising" class='selNav'>
         <icon class="iconfont icon-guanggao"></icon>
         <view>发布广告</view>
         <icon class="iconfont icon-xiangyou"></icon>
-      </view>
+      </view> -->
       <view  @tap="goAdList" class='selNav'>
         <icon class="iconfont icon-guanggao"></icon>
         <view>我的广告</view>
