@@ -88,6 +88,7 @@ setStore(store)
 export default class extends wepy.app {
   config = {
     pages: [
+      'pages/shopRecharge', // 广告金充值
       'pages/index', // 广告页
       'pages/description', // 使用说明
 
@@ -100,7 +101,7 @@ export default class extends wepy.app {
       'pages/advertising', // 发布广告
       'pages/adList', // 我的广告
       'pages/adDetails', // 广告详情
-      'pages/shopRecharge', // 广告金充值
+      
       'pages/reserveList', // 广告金明细
       'pages/adReviewList', // 广告审核列表
       'pages/adReview', // 广告审核

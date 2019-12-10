@@ -30,14 +30,17 @@
     font-size: 80rpx;
     margin: 40rpx 40rpx 20rpx 40rpx;
     float:left;
+    color: #7bb312;
 }
 .inputs{
     font-size: 40rpx;
     height: 90rpx;
     margin-left: 20rpx;
-    border-bottom: 1px solid #fff;
+    padding: 0 10rpx;
+    border: 1px solid #7bb312;
     float:right;
     width: 500rpx;
+    border-radius: 10rpx;
 }
 .reserve {
     margin: 40rpx 40rpx 0 40rpx;
@@ -48,12 +51,12 @@
 }
 
 .btn{
-  background: rgba(0, 0, 0, 0);
+  background: #7bb312;
   border: 1px solid #fff;
   width: 70%;
   height: 88rpx;
   margin: 40rpx auto;
-  border-radius: 44rpx;
+  border-radius: 10rpx;
   color: #fff;
   display: flex;
   align-items: center;
@@ -68,9 +71,36 @@
   width: 400rpx;
   height: 200rpx;
 }
+
+.amountList{
+  width: 690rpx;
+  height: auto;
+  padding: 0 30rpx;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  view {
+    width: 188rpx;
+    height: 100rpx;
+    margin: 20rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10rpx;
+    border: 1rpx solid #999;
+    color: #999;
+    font-size: 28rpx;
+  }
+  .active{
+    border-color: #7bb312;
+    color: #7bb312;
+    font-weight: 600;
+  }
+}
 </style>
 <template>
-  <view class='recharge'>
+  <!-- <view class='recharge'>
     <view hover-class='none' class="recharge_border">
         <view class="pay_address">
             <text>储蓄金充值</text>
@@ -89,6 +119,29 @@
     </view>
     <view class="loadingImg">
       <image src="/img/loading.gif" wx:if="{{loadingImgShow}}" />
+    </view>
+  </view> -->
+  <view>
+    <view class="amountList">
+      <repeat for="{{amountList}}" index="index" item="item">
+        <view class="{{selAmount == index ? 'active':''}}" data-index="{{index}}" @tap="selAmount">{{item}}元</view>
+      </repeat>
+    </view>
+    <view hover-class='none' class="recharge_border">
+        <view class="pay_address">
+            <text>自定义金额</text>
+        </view>
+        <!-- <form bindsubmit='upDataMoney'> -->
+          <view class="money">
+              ￥
+              <input class="inputs" type='digit' value="{{}}" @input="upDataM" placeholder="输入充值金额" />
+          </view>
+          <view class="reserve">
+              当前余额
+              <text class="money_text">{{shopInfo.balance}}</text>元
+          </view>
+          <button formType="submit" class="btn">充值</button>
+        <!-- </form> -->
     </view>
   </view>
 </template>
@@ -111,9 +164,30 @@ export default class shopRecharge extends wepy.page {
     requestUrl: '',
     shopInfo: {},
     userInfo: {},
-    loadingImgShow: false
+    loadingImgShow: false,
+    selAmount: -1,
+    amountList: [5, 10, 30, 50, 100, 200, 300, 500, 1000]
+    // amountList: [
+    //   {'amount': 5, 'sel': 0},
+    //   {'amount': 10, 'sel': 0},
+    //   {'amount': 30, 'sel': 0},
+    //   {'amount': 50, 'sel': 0},
+    //   {'amount': 100, 'sel': 0},
+    //   {'amount': 200, 'sel': 0},
+    //   {'amount': 300, 'sel': 0},
+    //   {'amount': 500, 'sel': 0},
+    //   {'amount': 1000, 'sel': 0}
+    // ]
   };
   methods = {
+    upDataM(e){
+      this.upDataM = e.detail.value
+    },
+    selAmount(e) {
+      this.selAmount = e.currentTarget.dataset.index
+      this.upDataM = ''
+      this.$apply()
+    },
     // 提交数据
     async upDataMoney(event) {
       // 提现金额
